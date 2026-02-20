@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "com.frightnight.game"
-        minSdk 24
+        minSdk 21
         targetSdk 34
-        versionCode 9
-        versionName "2.2"
+        versionCode 10
+        versionName "2.3"
     }
 
     buildTypes {
@@ -40,10 +40,10 @@ dependencies {
     implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86'
     implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86_64'
     
-    // LibGDX 3D Physics (Bullet)
-    implementation 'com.badlogicgames.gdx:gdx-bullet:1.12.1'
-    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-armeabi-v7a'
-    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-arm64-v8a'
-    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86'
-    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86_64'
+    // LibGDX 3D Physics (Bullet) - DISABLED for now, not used yet
+    // implementation 'com.badlogicgames.gdx:gdx-bullet:1.12.1'
+    // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-armeabi-v7a'
+    // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-arm64-v8a'
+    // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86'
+    // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86_64'
 }

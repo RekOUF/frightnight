@@ -17,12 +17,6 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-/**
- * LibGDX 3D Horror RPG Game Core
- * First-person and third-person switchable camera
- * Touch joystick controls
- * Night scene with 3D environment
- */
 public class FrightNightGame3D implements ApplicationListener {
     
     private PerspectiveCamera camera;
@@ -41,7 +35,7 @@ public class FrightNightGame3D implements ApplicationListener {
     private boolean isFirstPerson = true;
     private Vector3 playerPosition;
     private Vector3 playerDirection;
-    private float playerYaw = 0f; // Rotation around Y axis
+    private float playerYaw = 0f;
     
     // Player stats
     private float playerSpeed = 5f;
@@ -66,93 +60,123 @@ public class FrightNightGame3D implements ApplicationListener {
     
     @Override
     public void create() {
-        // Initialize camera
-        camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        playerPosition = new Vector3(0, 1.7f, 0); // Eye height ~1.7m
-        playerDirection = new Vector3(0, 0, -1); // Looking forward (negative Z)
-        camera.position.set(playerPosition);
-        camera.lookAt(playerPosition.x, playerPosition.y, playerPosition.z - 1);
-        camera.near = 0.1f;
-        camera.far = 300f;
-        camera.update();
+        try {
+            Gdx.app.log("FrightNight", "=== Starting game initialization ===");
+            
+            // Initialize camera
+            Gdx.app.log("FrightNight", "Creating camera...");
+            camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            playerPosition = new Vector3(0, 1.7f, 0);
+            playerDirection = new Vector3(0, 0, -1);
+            camera.position.set(playerPosition);
+            camera.lookAt(playerPosition.x, playerPosition.y, playerPosition.z - 1);
+            camera.near = 0.1f;
+            camera.far = 300f;
+            camera.update();
+            Gdx.app.log("FrightNight", "Camera created successfully");
+            
+            // Model batch for 3D rendering
+            Gdx.app.log("FrightNight", "Creating ModelBatch...");
+            modelBatch = new ModelBatch();
+            Gdx.app.log("FrightNight", "ModelBatch created successfully");
         
-        // Model batch for 3D rendering
-        modelBatch = new ModelBatch();
-        
-        // Environment with night lighting
-        environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.1f, 0.1f, 0.15f, 1f)); // Very dark ambient (night)
-        
-        // Moonlight (directional from above/angle)
-        DirectionalLight moonLight = new DirectionalLight();
-        moonLight.set(0.8f, 0.8f, 0.9f, -0.3f, -1f, -0.2f); // Blueish moon light
-        environment.add(moonLight);
-        
-        // Initialize model builder
-        modelBuilder = new ModelBuilder();
-        instances = new Array<>();
-        
-        // Build the 3D world
-        buildWorld();
-        
-        // Initialize controls
-        joystick = new TouchJoystick();
-        cameraController = new CameraController();
-        
-        Gdx.input.setInputProcessor(new GameInputProcessor(this));
+            // Environment with night lighting
+            Gdx.app.log("FrightNight", "Creating environment...");
+            environment = new Environment();
+            environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.1f, 0.1f, 0.15f, 1f));
+            
+            DirectionalLight moonLight = new DirectionalLight();
+            moonLight.set(0.8f, 0.8f, 0.9f, -0.3f, -1f, -0.2f);
+            environment.add(moonLight);
+            Gdx.app.log("FrightNight", "Environment created successfully");
+            
+            // Initialize model builder
+            Gdx.app.log("FrightNight", "Creating ModelBuilder...");
+            modelBuilder = new ModelBuilder();
+            instances = new Array<>();
+            Gdx.app.log("FrightNight", "ModelBuilder created successfully");
+            
+            // Build the 3D world
+            Gdx.app.log("FrightNight", "Building world...");
+            buildWorld();
+            Gdx.app.log("FrightNight", "World built successfully with " + instances.size + " instances");
+            
+            // Initialize controls
+            Gdx.app.log("FrightNight", "Creating controls...");
+            joystick = new TouchJoystick();
+            cameraController = new CameraController();
+            Gdx.app.log("FrightNight", "Controls created successfully");
+            
+            Gdx.input.setInputProcessor(new GameInputProcessor(this));
+            Gdx.app.log("FrightNight", "=== Game initialization complete ===");
+            
+        } catch (Exception e) {
+            Gdx.app.error("FrightNight", "FATAL ERROR during initialization: " + e.getMessage(), e);
+            isGameOver = true;
+        }
     }
     
     private void buildWorld() {
         try {
             // Create reusable models ONCE
+            Gdx.app.log("FrightNight", "Creating ground model...");
             Material groundMaterial = new Material(ColorAttribute.createDiffuse(0.06f, 0.18f, 0.06f, 1));
             groundModel = modelBuilder.createBox(200f, 0.1f, 200f, groundMaterial,
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            Gdx.app.log("FrightNight", "Ground model created");
             
+            Gdx.app.log("FrightNight", "Creating tree trunk model...");
             Material treeTrunkMaterial = new Material(ColorAttribute.createDiffuse(0.1f, 0.05f, 0.02f, 1));
             treeTrunkModel = modelBuilder.createCylinder(0.5f, 4f, 0.5f, 8, treeTrunkMaterial,
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            Gdx.app.log("FrightNight", "Tree trunk model created");
             
+            Gdx.app.log("FrightNight", "Creating tree leaves model...");
             Material leavesMaterial = new Material(ColorAttribute.createDiffuse(0.02f, 0.15f, 0.02f, 1));
             treeLeavesModel = modelBuilder.createSphere(2.5f, 2.5f, 2.5f, 10, 10, leavesMaterial,
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            Gdx.app.log("FrightNight", "Tree leaves model created");
             
+            Gdx.app.log("FrightNight", "Creating fence post model...");
             Material fenceMaterial = new Material(ColorAttribute.createDiffuse(0.15f, 0.1f, 0.08f, 1));
             fencePostModel = modelBuilder.createBox(0.3f, 3f, 0.3f, fenceMaterial,
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            Gdx.app.log("FrightNight", "Fence post model created");
             
             // Ground plane
+            Gdx.app.log("FrightNight", "Creating ground instance...");
             ModelInstance ground = new ModelInstance(groundModel);
             ground.transform.setToTranslation(0, -0.05f, 0);
             instances.add(ground);
+            Gdx.app.log("FrightNight", "Ground instance added");
             
             // Create forest instances
+            Gdx.app.log("FrightNight", "Creating forest...");
             createForest();
+            Gdx.app.log("FrightNight", "Forest created: " + instances.size + " instances so far");
             
             // Create fence instances
+            Gdx.app.log("FrightNight", "Creating fence...");
             createFence();
+            Gdx.app.log("FrightNight", "Fence created: " + instances.size + " total instances");
             
         } catch (Exception e) {
-            Gdx.app.error("FrightNight", "Error building world: " + e.getMessage());
+            Gdx.app.error("FrightNight", "Error building world: " + e.getMessage(), e);
             isGameOver = true;
         }
     }
     
     private void createForest() {
-        // Generate 20 trees (reduced for performance)
         for (int i = 0; i < 20; i++) {
-            float x = (float) (Math.random() * 140 - 70); // -70 to 70
+            float x = (float) (Math.random() * 140 - 70);
             float z = (float) (Math.random() * 140 - 70);
             
-            // Skip if too close to player spawn
             if (Math.abs(x) < 10 && Math.abs(z) < 10) continue;
             
-            // Tree trunk (reuse model!)
             ModelInstance trunk = new ModelInstance(treeTrunkModel);
             trunk.transform.setToTranslation(x, 2f, z);
             instances.add(trunk);
             
-            // Tree leaves (reuse model!)
             ModelInstance leaves = new ModelInstance(treeLeavesModel);
             leaves.transform.setToTranslation(x, 5f, z);
             instances.add(leaves);
@@ -160,76 +184,70 @@ public class FrightNightGame3D implements ApplicationListener {
     }
     
     private void createFence() {
-        // Fence posts around perimeter (reduced count)
         float fenceDistance = 80f;
-        int postsPerSide = 12; // Reduced from 20
+        int postsPerSide = 12;
         
         for (int i = 0; i < postsPerSide; i++) {
             float t = (float) i / (postsPerSide - 1);
             float pos = -fenceDistance + t * (2 * fenceDistance);
             
-            // North side
             createFencePost(pos, -fenceDistance);
-            // South side
             createFencePost(pos, fenceDistance);
-            // East side
             createFencePost(fenceDistance, pos);
-            // West side
             createFencePost(-fenceDistance, pos);
         }
     }
     
     private void createFencePost(float x, float z) {
-        // Reuse fencePostModel!
         ModelInstance post = new ModelInstance(fencePostModel);
         post.transform.setToTranslation(x, 1.5f, z);
         instances.add(post);
     }
     
     public void render() {
-        float delta = Gdx.graphics.getDeltaTime();
-        update(delta);
-        
-        // Clear screen with dark night sky
-        Gdx.gl.glClearColor(0.04f, 0.04f, 0.12f, 1); // Very dark blue (night)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        
-        // Enable depth test for 3D
-        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-        
-        // Render 3D scene
-        modelBatch.begin(camera);
-        for (ModelInstance instance : instances) {
-            modelBatch.render(instance, environment);
-        }
-        modelBatch.end();
-        
-        // Disable depth test for 2D UI
-        Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
-        
-        // Render UI (joystick, etc.)
-        if (joystick != null) {
-            joystick.render();
-        }
-        if (cameraController != null) {
-            cameraController.render();
+        try {
+            float delta = Gdx.graphics.getDeltaTime();
+            update(delta);
+            
+            Gdx.gl.glClearColor(0.04f, 0.04f, 0.12f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+            
+            if (isGameOver || modelBatch == null || camera == null || instances == null) {
+                return;
+            }
+            
+            Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+            
+            modelBatch.begin(camera);
+            for (ModelInstance instance : instances) {
+                if (instance != null) {
+                    modelBatch.render(instance, environment);
+                }
+            }
+            modelBatch.end();
+            
+            Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+            
+            if (joystick != null) {
+                joystick.render();
+            }
+            if (cameraController != null) {
+                cameraController.render();
+            }
+        } catch (Exception e) {
+            Gdx.app.error("FrightNight", "Error in render: " + e.getMessage(), e);
         }
     }
     
     private void update(float delta) {
         if (isGameOver) return;
-        
-        // Safety check
         if (joystick == null) return;
         
-        // Get joystick input
         Vector3 movement = joystick.getMovement();
         
-        // Update player position based on joystick
         if (movement.len() > 0.1f) {
             float speed = playerSpeed * (isRunning ? runMultiplier : 1f);
             
-            // Calculate movement direction relative to camera
             Vector3 forward = new Vector3(playerDirection).nor();
             Vector3 right = new Vector3(forward).crs(Vector3.Y).nor();
             
@@ -240,23 +258,19 @@ public class FrightNightGame3D implements ApplicationListener {
             
             playerPosition.add(moveDir);
             
-            // Clamp to world bounds
             playerPosition.x = Math.max(-85, Math.min(85, playerPosition.x));
             playerPosition.z = Math.max(-85, Math.min(85, playerPosition.z));
         }
         
-        // Update camera based on mode
         updateCamera();
         
-        // Update score (survival time)
         if (scaryLevel > 0) {
-            score += delta * 10; // 10 points per second
+            score += delta * 10;
         }
     }
     
     private void updateCamera() {
         if (isFirstPerson) {
-            // First person: camera at player position
             camera.position.set(playerPosition);
             camera.lookAt(
                 playerPosition.x + playerDirection.x,
@@ -264,9 +278,8 @@ public class FrightNightGame3D implements ApplicationListener {
                 playerPosition.z + playerDirection.z
             );
         } else {
-            // Third person: camera behind and above player
-            Vector3 cameraOffset = new Vector3(playerDirection).scl(-5f); // 5m behind
-            cameraOffset.y = 3f; // 3m above
+            Vector3 cameraOffset = new Vector3(playerDirection).scl(-5f);
+            cameraOffset.y = 3f;
             camera.position.set(playerPosition).add(cameraOffset);
             camera.lookAt(playerPosition);
         }
@@ -336,7 +349,6 @@ public class FrightNightGame3D implements ApplicationListener {
             modelBatch.dispose();
         }
         
-        // Dispose cached models (not instances!)
         if (groundModel != null) groundModel.dispose();
         if (treeTrunkModel != null) treeTrunkModel.dispose();
         if (treeLeavesModel != null) treeLeavesModel.dispose();

@@ -1,11 +1,11 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.frightnight.game"
-4    android:versionCode="9"
-5    android:versionName="2.2" >
+4    android:versionCode="10"
+5    android:versionName="2.3" >
 6
 7    <uses-sdk
-8        android:minSdkVersion="24"
+8        android:minSdkVersion="21"
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
@@ -50,7 +50,7 @@
 31        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 31-->[androidx.core:core:1.9.0] /root/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
 32        android:debuggable="true"
-33        android:extractNativeLibs="false"
+33        android:extractNativeLibs="true"
 34        android:hardwareAccelerated="true"
 34-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:21:9-43
 35        android:icon="@mipmap/ic_launcher"

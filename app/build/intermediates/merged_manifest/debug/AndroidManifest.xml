@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.frightnight.game"
-    android:versionCode="9"
-    android:versionName="2.2" >
+    android:versionCode="10"
+    android:versionName="2.3" >
 
     <uses-sdk
-        android:minSdkVersion="24"
+        android:minSdkVersion="21"
         android:targetSdkVersion="34" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,7 +30,7 @@
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
-        android:extractNativeLibs="false"
+        android:extractNativeLibs="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

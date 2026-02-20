@@ -12,6 +12,14 @@ A horror-themed survival Android game where players must survive the night by av
 
 ## Recent Changes
 
+### 2026-02-20: GitHub Integration, Auto-Update System & Copilot Instructions
+
+#### 3. AI Copilot Instructions
+- ✅ Created `.github/copilot-instructions.md` for AI coding agents
+- Concise, actionable guide (~58 lines) covering architecture, patterns, and workflows
+- Focuses on unique aspects: SurfaceView game loop, entity management, version system
+- Includes build commands, conventions, and integration points
+
 ### 2026-02-20: GitHub Integration & Auto-Update System
 
 #### 1. Git & GitHub Repository Setup

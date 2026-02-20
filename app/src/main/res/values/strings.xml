@@ -6,5 +6,6 @@
     <string name="score">Score: %d</string>
     <string name="high_score">High Score: %d</string>
     <string name="tap_to_continue">Tap to continue</string>
-    <string name="instructions">Survive the night! Avoid the monsters and collect power-ups.</string>
+    <string name="instructions">Explore the scary landscape. Set your fear level!</string>
+    <string name="scary_level_label">🎃 SCHRIK NIVEAU 🎃</string>
 </resources>

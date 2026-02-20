@@ -28,11 +28,48 @@
         android:padding="20dp"
         android:gravity="center" />
 
+    <TextView
+        android:id="@+id/scaryLevelLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="150dp"
+        android:text="@string/scary_level_label"
+        android:textColor="@color/ghost_white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/scaryLevelValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scaryLevelLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="0 - Vrij Wandelen"
+        android:textColor="@color/blood_red"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <SeekBar
+        android:id="@+id/scaryLevelSeekBar"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scaryLevelValue"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:max="10"
+        android:progress="0"
+        android:progressTint="@color/blood_red"
+        android:thumbTint="@color/blood_red" />
+
     <Button
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/scaryLevelSeekBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
         android:text="@string/play_button"
         android:textSize="24sp"
         android:backgroundTint="@color/blood_red"

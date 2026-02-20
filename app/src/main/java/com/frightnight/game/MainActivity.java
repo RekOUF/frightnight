@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,24 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private Button playButton;
     private TextView highScoreText;
+    private TextView scaryLevelValue;
+    private SeekBar scaryLevelSeekBar;
     private SharedPreferences prefs;
+    private int currentScaryLevel = 0;
+    
+    private static final String[] SCARY_LEVEL_LABELS = {
+        "0 - Vrij Wandelen 🌳",
+        "1 - Beetje Spooky 👻",
+        "2 - Licht Onrustig 😰",
+        "3 - Verdacht 🤨",
+        "4 - Eng Geluid 🔊",
+        "5 - Schaduwen 🌑",
+        "6 - Spanning 😨",
+        "7 - Gevaarlijk 💀",
+        "8 - Terrificerend 😱",
+        "9 - Nachtmerrie 🔥",
+        "10 - Pure Horror 💀🔥"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +47,34 @@ public class MainActivity extends AppCompatActivity {
         
         playButton = findViewById(R.id.playButton);
         highScoreText = findViewById(R.id.highScoreText);
+        scaryLevelValue = findViewById(R.id.scaryLevelValue);
+        scaryLevelSeekBar = findViewById(R.id.scaryLevelSeekBar);
 
+        // Load saved scary level
+        currentScaryLevel = prefs.getInt("scaryLevel", 0);
+        scaryLevelSeekBar.setProgress(currentScaryLevel);
+        scaryLevelValue.setText(SCARY_LEVEL_LABELS[currentScaryLevel]);
+        
+        // SeekBar listener
+        scaryLevelSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                currentScaryLevel = progress;
+                scaryLevelValue.setText(SCARY_LEVEL_LABELS[progress]);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Save scary level when user stops dragging
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("scaryLevel", currentScaryLevel);
+                editor.apply();
+            }
+        });
+        
         // Load and display high score
         int highScore = prefs.getInt("highScore", 0);
         highScoreText.setText(String.format(getString(R.string.high_score), highScore));

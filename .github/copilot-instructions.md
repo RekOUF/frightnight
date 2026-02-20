@@ -76,7 +76,9 @@ adb logcat -s GameView:D          # Debug game loop issues
 - **Coordinates**: World coordinates (0-2400, 0-1600), camera translates to screen space
 - **No external dependencies**: Pure Android SDK (no game engines, no Gson/Retrofit)
 - **Landscape-only**: Set in manifest, design assumes width > height
-
+Add horror effects**: Check `scaryLevel` in `GameView.update()` to trigger effects at specific levels
+- **New scare mechanics**: Implement jump scares, sound effects, visual effects based on `scaryLevel` value
+- **
 ## Common Modifications
 - **Adjust difficulty**: Change `ENEMY_SPAWN_INTERVAL`, `Enemy.speed`, or `Player.INVINCIBILITY_DURATION`
 - **New entity type**: Extend entity pattern above, add to GameView ArrayList, update in game loop, add camera param to draw()

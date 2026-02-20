@@ -5,12 +5,16 @@ This is a native Android game using **SurfaceView with a custom game loop** (not
 
 **World System**: Large 2400x1600 pixel world (~4 football fields) with camera following player. Touch coordinates converted from screen space to world space.
 
+**Game Philosophy**: This is a **SCHRIK-spel** (scare game), NOT a kill game. Focus is on psychological horror, jump scares, and tension building. Players can choose horror intensity (0-10).
+
 ## Core Game Loop (GameView.java)
 - **Camera System**: `Camera` tracks player, converts world↔screen coordinates. Camera clamped to world boundaries.
+- **Scary Level System**: `scaryLevel` (0-10) controls enemy spawning and game intensity. Level 0 = exploration mode (no enemies).
 - **Entity Management**: `ArrayList<Enemy>` and `ArrayList<PowerUp>` updated backwards (`i--`) for safe removal during iteration
-- **Spawning**: Time-based spawning (2s enemies, 5s power-ups). Enemies spawn around player (400px radius), not screen edges
+- **Conditional Spawning**: Enemies/power-ups only spawn when `scaryLevel > 0`. Time-based spawning (2s enemies, 5s power-ups).
+- **Smart Spawning**: Enemies spawn around player (400px radius), not screen edges
 - **Collision Detection**: Uses `Rect.intersects()` - each entity has `getBounds()` method returning `Rect`
-- **Score System**: +1/frame survival, +10 per escaped enemy, +50 per power-up collected
+- **Score System**: Only active in survival mode (level > 0). +1/frame survival, +10 per escaped enemy, +50 per power-up
 - **Landscape Rendering**: `Landscape.draw()` renders sky, grass, road, trees, fence using camera viewport
 
 ## World & Camera Pattern
@@ -44,7 +48,10 @@ Rect getBounds()          // For collision detection
 - **Tree generation**: Random placement avoiding road, perimeter trees along fence
 
 ## State Persistence
-Uses `SharedPreferences` (not Room/SQLite). Key: `"FrightNightPrefs"`, stores only `highScore` as int. Always use `editor.apply()` not `commit()`.
+Uses `SharedPreferences` (not Room/SQLite). Key: `"FrightNightPrefs"`, stores: 
+- `highScore` (int) - Best survival score
+- `scaryLevel` (int 0-10) - Horror intensity preference
+Always use `editor.apply()` not `commit()`.
 
 ## Version Management System
 - **Current version**: Update `VersionChecker.CURRENT_VERSION` constant when releasing

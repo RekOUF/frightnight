@@ -12,6 +12,43 @@ A horror-themed survival Android game where players must survive the night by av
 
 ## Recent Changes
 
+### 2026-02-20: Landscape Environment & Camera System - Major Visual Upgrade
+
+#### 4. World System with Camera and Landscape
+- ✅ Created `Camera.java` - Viewport management that follows the player
+- ✅ Created `Landscape.java` - Full environment renderer (2400x1600 world)
+- ✅ Updated all entity classes to use world coordinates
+- ✅ Implemented boundary system with fence collision detection
+
+**New Features**:
+- **Large Open World**: 2400x1600 pixels (~4 football fields)
+- **Grass Terrain**: Green grass background fills the entire world
+- **Road System**: Horizontal road (150px wide) with yellow dashed lines
+- **Scary Trees**: 30+ trees with evil glowing eyes (yellow/red)
+  - Trees along road edges
+  - Trees along fence perimeter
+- **Fence Boundaries**: Brown wooden fence (50px margin from world edge)
+  - Player cannot pass through - collision detection
+  - Visual posts every 20 pixels
+- **Sky Elements**:
+  - Bright sun in top-right corner with glow effect
+  - 8 animated clouds that drift slowly eastward
+  - Sky blue gradient background
+- **Camera System**: Smooth following of player, clamped to world bounds
+
+**Technical Implementation**:
+- `Camera` class converts between world and screen coordinates
+- `Landscape.isInBounds()` validates player movement
+- Touch events translated from screen to world coordinates
+- Enemies spawn around player (400px away), not at screen edges
+- Entities only rendered when visible in viewport (performance optimization)
+
+**Gameplay Impact**:
+- Players can freely roam large open area
+- Enemies chase player anywhere in world
+- Power-ups spawn near player position
+- Camera creates cinematic feeling as player explores
+
 ### 2026-02-20: GitHub Integration, Auto-Update System & Copilot Instructions
 
 #### 3. AI Copilot Instructions
@@ -84,10 +121,12 @@ frightnight/
 │   │   │   ├── MainActivity.java      # Main menu + update checker
 │   │   │   ├── GameActivity.java      # Game screen container
 │   │   │   ├── GameView.java          # Game loop and logic
-│   │   │   ├── Player.java            # Player character
-│   │   │   ├── Enemy.java             # Monster enemy
-│   │   │   ├── PowerUp.java           # Power-up collectible
-│   │   │   └── VersionChecker.java    # GitHub version checking [NEW]
+│   │   │   ├── Camera.java            # Viewport/camera system [NEW]
+│   │   │   ├── Landscape.java         # World renderer (terrain, trees, sky) [NEW]
+│   │   │   ├── Player.java            # Player character (world coords)
+│   │   │   ├── Enemy.java             # Monster enemy (world coords)
+│   │   │   ├── PowerUp.java           # Power-up collectible (world coords)
+│   │   │   └── VersionChecker.java    # GitHub version checking
 │   │   └── res/
 │   │       ├── layout/
 │   │       │   ├── activity_main.xml  # Main menu layout
@@ -99,8 +138,10 @@ frightnight/
 ├── build.gradle               # Project-level Gradle config
 ├── settings.gradle            # Gradle settings
 ├── gradle.properties          # Gradle properties
+├── .github/
+│   └── copilot-instructions.md # AI coding agent instructions
 ├── README.md                  # Project documentation
-└── ai.context.md             # This file - AI context [NEW]
+└── ai.context.md             # This file - AI context
 ```
 
 ---
@@ -396,6 +437,11 @@ Future: Consider `develop` + `main` with feature branches
 - Touch controls
 - GitHub integration
 - Auto-update checking system
+- **Landscape environment** with grass, road, trees, fence
+- **Camera system** for large world exploration (2400x1600)
+- **Sky elements** (sun and animated clouds)
+- **Scary trees** with glowing eyes
+- **Boundary collision** (fence system)
 
 ---
 

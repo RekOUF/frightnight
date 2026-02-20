@@ -24,6 +24,8 @@ public class GameView extends SurfaceView implements Runnable {
     private ArrayList<Enemy> enemies;
     private ArrayList<PowerUp> powerUps;
     private Random random;
+    private Camera camera;
+    private Landscape landscape;
     
     private int screenWidth;
     private int screenHeight;
@@ -57,8 +59,13 @@ public class GameView extends SurfaceView implements Runnable {
         screenWidth = w;
         screenHeight = h;
         
-        // Initialize player in the center
-        player = new Player(screenWidth / 2, screenHeight / 2);
+        // Initialize landscape and camera
+        landscape = new Landscape();
+        camera = new Camera(screenWidth, screenHeight, 
+                           Landscape.WORLD_WIDTH, Landscape.WORLD_HEIGHT);
+        
+        // Initialize player in the center of world
+        player = new Player(Landscape.WORLD_WIDTH / 2, Landscape.WORLD_HEIGHT / 2);
         
         score = 0;
         isGameOver = false;
@@ -77,7 +84,10 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
         if (isGameOver) {
-            return;
+           Update landscape
+        landscape.update();
+        
+        //  return;
         }
         
         long currentTime = System.currentTimeMillis();
@@ -102,11 +112,10 @@ public class GameView extends SurfaceView implements Runnable {
             // Check collision with player
             if (enemy.collidesWith(player) && !player.isInvincible()) {
                 gameOver();
-                return;
-            }
-            
-            // Remove off-screen enemies
-            if (enemy.isOffScreen(screenWidth, screenHeight)) {
+                returnenemies that are too far from player
+            int dx = enemy.getX() - player.getX();
+            int dy = enemy.getY() - player.getY();
+            if (Math.sqrt(dx * dx + dy * dy) > 1500) {
                 enemies.remove(i);
                 score += 10; // Bonus for surviving
             }
@@ -121,34 +130,46 @@ public class GameView extends SurfaceView implements Runnable {
                 player.activateInvincibility();
                 powerUps.remove(i);
                 score += 50;
-            } else if (powerUp.isOffScreen(screenWidth, screenHeight)) {
-                powerUps.remove(i);
             }
+        }
+        
+        // Update player and enforce boundaries
+        player.update(landscape);
+        
+        // Update camera to follow player
+        camera.centerOn(player.getX(), player.getY());
+        
         }
         
         player.update();
         score++;
     }
-
-    private void draw() {
-        if (surfaceHolder.getSurface().isValid()) {
-            canvas = surfaceHolder.lockCanvas();
+landscape (sky, grass, road, trees, fence)
+            landscape.draw(canvas, paint, camera);
             
-            // Draw background
-            canvas.drawColor(Color.parseColor("#1A1A1A"));
-            
-            // Draw score
-            paint.setColor(Color.WHITE);
-            paint.setTextSize(40);
-            canvas.drawText("Score: " + score, 50, 60, paint);
-            
-            // Draw player
-            player.draw(canvas, paint);
-            
-            // Draw enemies
-            for (Enemy enemy : enemies) {
-                enemy.draw(canvas, paint);
+            // Draw power-ups (in world coordinates)
+            for (PowerUp powerUp : powerUps) {
+                powerUp.draw(canvas, paint, camera);
             }
+            
+            // Draw player (in world coordinates)
+            player.draw(canvas, paint, camera);
+            
+            // Draw enemies (in world coordinates)
+            for (Enemy enemy : enemies) {
+                enemy.draw(canvas, paint, camera);
+            }
+            
+            // Draw UI overlay (score) - always on screen
+            paint.setColor(Color.BLACK);
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawRect(10, 10, 280, 80, paint);
+            paint.setColor(Color.WHITE);
+            paint.setStyle(Paint.Style.STROKE);
+            canvas.drawRect(10, 10, 280, 80, paint);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setTextSize(40);
+            canvas.drawText("Score: " + score, 30, 55, paint);
             
             // Draw power-ups
             for (PowerUp powerUp : powerUps) {
@@ -170,30 +191,48 @@ public class GameView extends SurfaceView implements Runnable {
             
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
-    }
-
-    private void sleep() {
-        try {
-            Thread.sleep(17); // ~60 FPS
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void spawnEnemy() {
+    }// Spawn enemies around player position (off-screen)
         int side = random.nextInt(4); // 0=top, 1=right, 2=bottom, 3=left
         int x, y;
+        int spawnDistance = 400; // Distance from player
+        
+        int playerX = player.getX();
+        int playerY = player.getY();
         
         switch (side) {
             case 0: // Top
-                x = random.nextInt(screenWidth);
-                y = -50;
+                x = playerX + random.nextInt(600) - 300;
+                y = playerY - spawnDistance;
                 break;
             case 1: // Right
-                x = screenWidth + 50;
-                y = random.nextInt(screenHeight);
+                x = playerX + spawnDistance;
+                y = playerY + random.nextInt(600) - 300;
                 break;
             case 2: // Bottom
+                x = playerX + random.nextInt(600) - 300;
+                y = playerY + spawnDistance;
+                break;
+            default: // Left
+                x = playerX - spawnDistance;
+                y = playerY + random.nextInt(600) - 300;
+                break;
+        }
+        
+        // Ensure within world bounds
+        x = Math.max(100, Math.min(x, Landscape.WORLD_WIDTH - 100));
+        y = Math.max(100, Math.min(y, Landscape.WORLD_HEIGHT - 100));       x = screenWidth + 50;
+                y = random.nextInt(screenHeight);
+        // Spawn power-up somewhere in visible area around player
+        int playerX = player.getX();
+        int playerY = player.getY();
+        
+        int x = playerX + random.nextInt(400) - 200;
+        int y = playerY + random.nextInt(400) - 200;
+        
+        // Ensure within world bounds
+        x = Math.max(100, Math.min(x, Landscape.WORLD_WIDTH - 100));
+        y = Math.max(100, Math.min(y, Landscape.WORLD_HEIGHT - 100));
+        
                 x = random.nextInt(screenWidth);
                 y = screenHeight + 50;
                 break;
@@ -215,7 +254,10 @@ public class GameView extends SurfaceView implements Runnable {
     private void gameOver() {
         isGameOver = true;
         
-        // Update high score
+        // U// Convert screen coordinates to world coordinates
+            float worldX = camera.screenToWorldX(event.getX());
+            float worldY = camera.screenToWorldY(event.getY());
+            player.moveTo((int) worldX, (int) worldY
         if (score > highScore) {
             highScore = score;
             SharedPreferences prefs = getContext().getSharedPreferences("FrightNightPrefs", Context.MODE_PRIVATE);

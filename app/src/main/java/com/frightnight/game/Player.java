@@ -27,18 +27,35 @@ public class Player {
         this.targetY = targetY;
     }
     
-    public void update() {
+    public void update(Landscape landscape) {
         // Move towards target
         int dx = targetX - x;
         int dy = targetY - y;
         double distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance > speed) {
-            x += (int) (dx / distance * speed);
-            y += (int) (dy / distance * speed);
+            int newX = x + (int) (dx / distance * speed);
+            int newY = y + (int) (dy / distance * speed);
+            
+            // Check boundaries
+            if (landscape.isInBounds(newX, newY, size)) {
+                x = newX;
+                y = newY;
+            } else {
+                // Try moving only horizontally
+                if (landscape.isInBounds(newX, y, size)) {
+                    x = newX;
+                }
+                // Try moving only vertically
+                if (landscape.isInBounds(x, newY, size)) {
+                    y = newY;
+                }
+            }
         } else {
-            x = targetX;
-            y = targetY;
+            if (landscape.isInBounds(targetX, targetY, size)) {
+                x = targetX;
+                y = targetY;
+            }
         }
         
         // Update invincibility
@@ -47,7 +64,10 @@ public class Player {
         }
     }
     
-    public void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas, Paint paint, Camera camera) {
+        int screenX = camera.worldToScreenX(x);
+        int screenY = camera.worldToScreenY(y);
+        
         if (invincible) {
             // Flash between blue and white when invincible
             if ((System.currentTimeMillis() / 200) % 2 == 0) {
@@ -58,12 +78,12 @@ public class Player {
         } else {
             paint.setColor(Color.GREEN);
         }
-        canvas.drawCircle(x, y, size, paint);
+        canvas.drawCircle(screenX, screenY, size, paint);
         
         // Draw eyes
         paint.setColor(Color.BLACK);
-        canvas.drawCircle(x - 10, y - 5, 5, paint);
-        canvas.drawCircle(x + 10, y - 5, 5, paint);
+        canvas.drawCircle(screenX - 10, screenY - 5, 5, paint);
+        canvas.drawCircle(screenX + 10, screenY - 5, 5, paint);
     }
     
     public void activateInvincibility() {

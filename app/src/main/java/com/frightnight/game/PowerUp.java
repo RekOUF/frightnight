@@ -16,20 +16,23 @@ public class PowerUp {
         this.spawnTime = System.currentTimeMillis();
     }
     
-    public void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas, Paint paint, Camera camera) {
+        int screenX = camera.worldToScreenX(x);
+        int screenY = camera.worldToScreenY(y);
+        
         // Pulsating effect
         long time = System.currentTimeMillis() - spawnTime;
         int pulseSize = size + (int) (Math.sin(time / 200.0) * 5);
         
         // Draw star shape (power-up)
         paint.setColor(Color.YELLOW);
-        canvas.drawCircle(x, y, pulseSize, paint);
+        canvas.drawCircle(screenX, screenY, pulseSize, paint);
         
         // Draw cross inside
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(5);
-        canvas.drawLine(x - 10, y, x + 10, y, paint);
-        canvas.drawLine(x, y - 10, x, y + 10, paint);
+        canvas.drawLine(screenX - 10, screenY, screenX + 10, screenY, paint);
+        canvas.drawLine(screenX, screenY - 10, screenX, screenY + 10, paint);
         paint.setStrokeWidth(1);
     }
     
@@ -37,11 +40,6 @@ public class PowerUp {
         Rect playerBounds = player.getBounds();
         Rect powerUpBounds = new Rect(x - size, y - size, x + size, y + size);
         return Rect.intersects(playerBounds, powerUpBounds);
-    }
-    
-    public boolean isOffScreen(int screenWidth, int screenHeight) {
-        // Power-ups don't move, so they're never off-screen unless screen changes
-        return false;
     }
     
     public int getX() { return x; }

@@ -27,25 +27,28 @@ public class Enemy {
         }
     }
     
-    public void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas, Paint paint, Camera camera) {
+        int screenX = camera.worldToScreenX(x);
+        int screenY = camera.worldToScreenY(y);
+        
         // Draw monster body (red circle)
         paint.setColor(Color.RED);
-        canvas.drawCircle(x, y, size, paint);
+        canvas.drawCircle(screenX, screenY, size, paint);
         
         // Draw evil eyes (yellow)
         paint.setColor(Color.YELLOW);
-        canvas.drawCircle(x - 12, y - 8, 6, paint);
-        canvas.drawCircle(x + 12, y - 8, 6, paint);
+        canvas.drawCircle(screenX - 12, screenY - 8, 6, paint);
+        canvas.drawCircle(screenX + 12, screenY - 8, 6, paint);
         
         // Draw pupils (black)
         paint.setColor(Color.BLACK);
-        canvas.drawCircle(x - 12, y - 8, 3, paint);
-        canvas.drawCircle(x + 12, y - 8, 3, paint);
+        canvas.drawCircle(screenX - 12, screenY - 8, 3, paint);
+        canvas.drawCircle(screenX + 12, screenY - 8, 3, paint);
         
         // Draw scary mouth
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(3);
-        canvas.drawLine(x - 15, y + 10, x + 15, y + 10, paint);
+        canvas.drawLine(screenX - 15, screenY + 10, screenX + 15, screenY + 10, paint);
         paint.setStrokeWidth(1);
     }
     
@@ -53,10 +56,6 @@ public class Enemy {
         Rect playerBounds = player.getBounds();
         Rect enemyBounds = new Rect(x - size, y - size, x + size, y + size);
         return Rect.intersects(playerBounds, enemyBounds);
-    }
-    
-    public boolean isOffScreen(int screenWidth, int screenHeight) {
-        return x < -100 || x > screenWidth + 100 || y < -100 || y > screenHeight + 100;
     }
     
     public int getX() { return x; }

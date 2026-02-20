@@ -12,6 +12,55 @@ A horror-themed survival Android game where players must survive the night by av
 
 ## Recent Changes
 
+### 2026-02-20: Scary Level System - Transform to Schrik-Spel (Scare Game)
+
+#### 5. Scary Level Selector (0-10)
+- ✅ Added SeekBar in MainActivity for horror intensity selection
+- ✅ 11 levels from "Vrij Wandelen" (0) to "Pure Horror" (10)
+- ✅ Descriptive Dutch labels with emojis for each level
+- ✅ Saved in SharedPreferences, persists between sessions
+- ✅ GameView respects scary level:
+  - **Level 0**: Peaceful exploration mode (no enemies, no power-ups)
+  - **Level 1-10**: Progressive horror with enemies and dangers
+
+**Game Philosophy Change**:
+- NOT a kill game - it's a **SCHRIK-spel** (scare game)
+- Focus on psychological horror, jump scares, tension
+- Level 0 allows players to explore the beautiful but eerie landscape
+- Higher levels introduce increasing horror elements
+
+**Scary Level Labels**:
+```
+0 - Vrij Wandelen 🌳      (Free exploration)
+1 - Beetje Spooky 👻      (A bit spooky)
+2 - Licht Onrustig 😰     (Slightly uneasy)
+3 - Verdacht 🤨           (Suspicious)
+4 - Eng Geluid 🔊         (Scary sounds)
+5 - Schaduwen 🌑          (Shadows)
+6 - Spanning 😨           (Tension)
+7 - Gevaarlijk 💀         (Dangerous)
+8 - Terrificerend 😱      (Terrifying)
+9 - Nachtmerrie 🔥        (Nightmare)
+10 - Pure Horror 💀🔥     (Pure horror)
+```
+
+**Technical Implementation**:
+- SeekBar with 11 positions (0-10)
+- Real-time label updates as user drags
+- Automatic save on release
+- GameView checks `scaryLevel` before spawning enemies
+- UI shows "Exploration" instead of score in level 0
+- Score mechanics disabled in exploration mode
+
+**Future Horror Features** (Planned):
+- **Jump Scares**: Zombies suddenly appearing from behind trees
+- **Sound Effects**: Ambient horror sounds based on level
+- **Dynamic Spawning**: More frequent/aggressive enemies at higher levels
+- **Visual Effects**: Fog, darkness, shadows increase with level
+- **Random Events**: Creepy occurrences based on scary level
+- **Player Fear Mechanic**: Screen shake, heartbeat sounds
+- **Time-based Scares**: Things get scarier at "night" in-game
+
 ### 2026-02-20: Landscape Environment & Camera System - Major Visual Upgrade
 
 #### 4. World System with Camera and Landscape
@@ -430,18 +479,20 @@ Future: Consider `develop` + `main` with feature branches
 
 ### v1.0 (2026-02-20)
 - Initial release
-- Basic survival gameplay
-- Monster AI with pathfinding
+- Survival and exploration gameplay
+- Monster AI with pathfinding (enabled via Scary Level)
 - Power-up system with invincibility
-- Score and high score tracking
-- Touch controls
-- GitHub integration
-- Auto-update checking system
-- **Landscape environment** with grass, road, trees, fence
+- **Scary Level system (0-10)**: Choose your horror intensity
+- **Exploration Mode (Level 0)**: Peaceful walking, no enemies
+- Score and high score tracking (survival mode only)
+- Touch controls for movement
+- GitHub integration with auto-update checking
+- **Landscape environment** with grass, road, scary trees, fence
 - **Camera system** for large world exploration (2400x1600)
 - **Sky elements** (sun and animated clouds)
 - **Scary trees** with glowing eyes
 - **Boundary collision** (fence system)
+- **Schrik-spel philosophy**: Focus on scares, not kills
 
 ---
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar scaryLevelSeekBar;
     private SharedPreferences prefs;
     private int currentScaryLevel = 0;
+    private MediaPlayer thunderPlayer;
     
     private static final String[] SCARY_LEVEL_LABELS = {
         "0 - Vrij Wandelen 🌳",
@@ -85,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 startGame();
             }
         });
+        
+        // Start looping thunder sound
+        playThunderLoop();
     }
 
     private void startGame() {
@@ -98,5 +103,44 @@ public class MainActivity extends AppCompatActivity {
         // Update high score when returning from game
         int highScore = prefs.getInt("highScore", 0);
         highScoreText.setText(String.format(getString(R.string.high_score), highScore));
+        
+        // Resume thunder if stopped
+        if (thunderPlayer != null && !thunderPlayer.isPlaying()) {
+            thunderPlayer.start();
+        } else if (thunderPlayer == null) {
+            playThunderLoop();
+        }
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Keep thunder playing in background
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Stop and release thunder when app is destroyed
+        if (thunderPlayer != null) {
+            thunderPlayer.release();
+            thunderPlayer = null;
+        }
+    }
+    
+    private void playThunderLoop() {
+        try {
+            if (thunderPlayer != null) {
+                thunderPlayer.release();
+            }
+            thunderPlayer = MediaPlayer.create(this, R.raw.thunder);
+            if (thunderPlayer != null) {
+                thunderPlayer.setVolume(0.5f, 0.5f); // Softer in menu
+                thunderPlayer.setLooping(true); // Loop continuously!
+                thunderPlayer.start();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error playing thunder loop", e);
+        }
     }
 }

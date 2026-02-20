@@ -259,6 +259,13 @@ public class SplashActivity extends Activity {
     }
     
     private void goToMainActivity() {
+        // Stop thunder before going to main menu (main menu will start its own loop)
+        if (thunderPlayer != null) {
+            thunderPlayer.stop();
+            thunderPlayer.release();
+            thunderPlayer = null;
+        }
+        
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

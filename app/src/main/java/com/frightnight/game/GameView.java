@@ -88,7 +88,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void update() {
-        if (isGameOver) {
+        if (isGameOver || landscape == null) {
             return;
         }
         
@@ -167,7 +167,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void draw() {
-        if (surfaceHolder.getSurface().isValid()) {
+        if (surfaceHolder.getSurface().isValid() && landscape != null && camera != null) {
             canvas = surfaceHolder.lockCanvas();
             
             // Draw landscape (sky, grass, road, trees, fence)

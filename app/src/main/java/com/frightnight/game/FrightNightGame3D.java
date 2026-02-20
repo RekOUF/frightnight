@@ -31,6 +31,12 @@ public class FrightNightGame3D implements ApplicationListener {
     private Array<ModelInstance> instances;
     private ModelBuilder modelBuilder;
     
+    // Cached models (reuse for multiple instances!)
+    private Model groundModel;
+    private Model treeTrunkModel;
+    private Model treeLeavesModel;
+    private Model fencePostModel;
+    
     // Camera modes
     private boolean isFirstPerson = true;
     private Vector3 playerPosition;
@@ -97,84 +103,90 @@ public class FrightNightGame3D implements ApplicationListener {
     }
     
     private void buildWorld() {
-        // Ground plane (dark grass)
-        Material groundMaterial = new Material(ColorAttribute.createDiffuse(0.06f, 0.18f, 0.06f, 1)); // Dark grass
-        Model groundModel = modelBuilder.createBox(200f, 0.1f, 200f, groundMaterial,
-                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        ModelInstance ground = new ModelInstance(groundModel);
-        ground.transform.setToTranslation(0, -0.05f, 0);
-        instances.add(ground);
-        
-        // Create trees (dark scary trees)
-        createForest();
-        
-        // Create fence boundary
-        createFence();
-        
-        // Sky will be rendered as dark background in render()
+        try {
+            // Create reusable models ONCE
+            Material groundMaterial = new Material(ColorAttribute.createDiffuse(0.06f, 0.18f, 0.06f, 1));
+            groundModel = modelBuilder.createBox(200f, 0.1f, 200f, groundMaterial,
+                    VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            
+            Material treeTrunkMaterial = new Material(ColorAttribute.createDiffuse(0.1f, 0.05f, 0.02f, 1));
+            treeTrunkModel = modelBuilder.createCylinder(0.5f, 4f, 0.5f, 8, treeTrunkMaterial,
+                    VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            
+            Material leavesMaterial = new Material(ColorAttribute.createDiffuse(0.02f, 0.15f, 0.02f, 1));
+            treeLeavesModel = modelBuilder.createSphere(2.5f, 2.5f, 2.5f, 10, 10, leavesMaterial,
+                    VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            
+            Material fenceMaterial = new Material(ColorAttribute.createDiffuse(0.15f, 0.1f, 0.08f, 1));
+            fencePostModel = modelBuilder.createBox(0.3f, 3f, 0.3f, fenceMaterial,
+                    VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+            
+            // Ground plane
+            ModelInstance ground = new ModelInstance(groundModel);
+            ground.transform.setToTranslation(0, -0.05f, 0);
+            instances.add(ground);
+            
+            // Create forest instances
+            createForest();
+            
+            // Create fence instances
+            createFence();
+            
+        } catch (Exception e) {
+            Gdx.app.error("FrightNight", "Error building world: " + e.getMessage());
+            isGameOver = true;
+        }
     }
     
     private void createForest() {
-        Material treeTrunkMaterial = new Material(ColorAttribute.createDiffuse(0.1f, 0.05f, 0.02f, 1)); // Very dark brown
-        Material leavesMaterial = new Material(ColorAttribute.createDiffuse(0.02f, 0.15f, 0.02f, 1)); // Very dark green
-        
-        // Generate 30+ trees randomly
-        for (int i = 0; i < 35; i++) {
-            float x = (float) (Math.random() * 160 - 80); // -80 to 80
-            float z = (float) (Math.random() * 160 - 80);
+        // Generate 20 trees (reduced for performance)
+        for (int i = 0; i < 20; i++) {
+            float x = (float) (Math.random() * 140 - 70); // -70 to 70
+            float z = (float) (Math.random() * 140 - 70);
             
             // Skip if too close to player spawn
             if (Math.abs(x) < 10 && Math.abs(z) < 10) continue;
             
-            // Tree trunk
-            Model trunkModel = modelBuilder.createCylinder(0.5f, 4f, 0.5f, 8, treeTrunkMaterial,
-                    VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-            ModelInstance trunk = new ModelInstance(trunkModel);
+            // Tree trunk (reuse model!)
+            ModelInstance trunk = new ModelInstance(treeTrunkModel);
             trunk.transform.setToTranslation(x, 2f, z);
             instances.add(trunk);
             
-            // Tree leaves (sphere on top)
-            Model leavesModel = modelBuilder.createSphere(2.5f, 2.5f, 2.5f, 12, 12, leavesMaterial,
-                    VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-            ModelInstance leaves = new ModelInstance(leavesModel);
+            // Tree leaves (reuse model!)
+            ModelInstance leaves = new ModelInstance(treeLeavesModel);
             leaves.transform.setToTranslation(x, 5f, z);
             instances.add(leaves);
         }
     }
     
     private void createFence() {
-        Material fenceMaterial = new Material(ColorAttribute.createDiffuse(0.15f, 0.1f, 0.08f, 1)); // Dark wood
-        
-        // Fence posts around perimeter
-        float fenceDistance = 90f;
-        int postsPerSide = 20;
+        // Fence posts around perimeter (reduced count)
+        float fenceDistance = 80f;
+        int postsPerSide = 12; // Reduced from 20
         
         for (int i = 0; i < postsPerSide; i++) {
             float t = (float) i / (postsPerSide - 1);
             float pos = -fenceDistance + t * (2 * fenceDistance);
             
             // North side
-            createFencePost(pos, -fenceDistance, fenceMaterial);
+            createFencePost(pos, -fenceDistance);
             // South side
-            createFencePost(pos, fenceDistance, fenceMaterial);
+            createFencePost(pos, fenceDistance);
             // East side
-            createFencePost(fenceDistance, pos, fenceMaterial);
+            createFencePost(fenceDistance, pos);
             // West side
-            createFencePost(-fenceDistance, pos, fenceMaterial);
+            createFencePost(-fenceDistance, pos);
         }
     }
     
-    private void createFencePost(float x, float z, Material material) {
-        Model postModel = modelBuilder.createBox(0.3f, 3f, 0.3f, material,
-                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        ModelInstance post = new ModelInstance(postModel);
+    private void createFencePost(float x, float z) {
+        // Reuse fencePostModel!
+        ModelInstance post = new ModelInstance(fencePostModel);
         post.transform.setToTranslation(x, 1.5f, z);
         instances.add(post);
     }
     
-    @Override
     public void render() {
-        // Update game logic
         float delta = Gdx.graphics.getDeltaTime();
         update(delta);
         
@@ -323,13 +335,13 @@ public class FrightNightGame3D implements ApplicationListener {
         if (modelBatch != null) {
             modelBatch.dispose();
         }
-        if (instances != null) {
-            for (ModelInstance instance : instances) {
-                if (instance != null && instance.model != null) {
-                    instance.model.dispose();
-                }
-            }
-        }
+        
+        // Dispose cached models (not instances!)
+        if (groundModel != null) groundModel.dispose();
+        if (treeTrunkModel != null) treeTrunkModel.dispose();
+        if (treeLeavesModel != null) treeLeavesModel.dispose();
+        if (fencePostModel != null) fencePostModel.dispose();
+        
         if (joystick != null) {
             joystick.dispose();
         }

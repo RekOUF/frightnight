@@ -182,6 +182,9 @@ public class FrightNightGame3D implements ApplicationListener {
         Gdx.gl.glClearColor(0.04f, 0.04f, 0.12f, 1); // Very dark blue (night)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         
+        // Enable depth test for 3D
+        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+        
         // Render 3D scene
         modelBatch.begin(camera);
         for (ModelInstance instance : instances) {
@@ -189,13 +192,23 @@ public class FrightNightGame3D implements ApplicationListener {
         }
         modelBatch.end();
         
+        // Disable depth test for 2D UI
+        Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+        
         // Render UI (joystick, etc.)
-        joystick.render();
-        cameraController.render();
+        if (joystick != null) {
+            joystick.render();
+        }
+        if (cameraController != null) {
+            cameraController.render();
+        }
     }
     
     private void update(float delta) {
         if (isGameOver) return;
+        
+        // Safety check
+        if (joystick == null) return;
         
         // Get joystick input
         Vector3 movement = joystick.getMovement();
@@ -307,9 +320,21 @@ public class FrightNightGame3D implements ApplicationListener {
     
     @Override
     public void dispose() {
-        modelBatch.dispose();
-        for (ModelInstance instance : instances) {
-            instance.model.dispose();
+        if (modelBatch != null) {
+            modelBatch.dispose();
+        }
+        if (instances != null) {
+            for (ModelInstance instance : instances) {
+                if (instance != null && instance.model != null) {
+                    instance.model.dispose();
+                }
+            }
+        }
+        if (joystick != null) {
+            joystick.dispose();
+        }
+        if (cameraController != null) {
+            cameraController.dispose();
         }
     }
 }

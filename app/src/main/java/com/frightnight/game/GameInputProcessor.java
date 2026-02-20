@@ -16,6 +16,11 @@ public class GameInputProcessor implements InputProcessor {
     
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // Safety checks
+        if (game == null || game.cameraController == null || game.joystick == null) {
+            return false;
+        }
+        
         // Check if touch is on camera rotation buttons
         if (game.cameraController.isLeftButtonPressed(screenX, screenY)) {
             game.rotateCameraLeft(3f);
@@ -37,12 +42,18 @@ public class GameInputProcessor implements InputProcessor {
     
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        game.joystick.onTouchDragged(screenX, screenY, pointer);
+        if (game != null && game.joystick != null) {
+            game.joystick.onTouchDragged(screenX, screenY, pointer);
+        }
         return true;
     }
     
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (game == null || game.cameraController == null || game.joystick == null) {
+            return false;
+        }
+        
         // Release sprint button
         if (game.cameraController.isSprintButtonPressed(screenX, screenY)) {
             game.setRunning(false);
@@ -80,7 +91,9 @@ public class GameInputProcessor implements InputProcessor {
     
     @Override
     public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        game.joystick.onTouchUp(pointer);
+        if (game != null && game.joystick != null) {
+            game.joystick.onTouchUp(pointer);
+        }
         return false;
     }
 }

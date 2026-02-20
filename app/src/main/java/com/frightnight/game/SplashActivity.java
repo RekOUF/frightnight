@@ -49,7 +49,7 @@ public class SplashActivity extends Activity {
         try {
             thunderPlayer = MediaPlayer.create(this, R.raw.thunder);
             if (thunderPlayer != null) {
-                thunderPlayer.setVolume(0.3f, 0.3f); // Soft thunder
+                thunderPlayer.setVolume(1.0f, 1.0f); // LOUD thunder!
                 thunderPlayer.start();
             }
         } catch (Exception e) {

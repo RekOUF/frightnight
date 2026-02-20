@@ -41,14 +41,14 @@ Rect getBounds()          // For collision detection
 ```
 
 ## Landscape System (Landscape.java)
-- **Static world size**: `WORLD_WIDTH = 2400`, `WORLD_HEIGHT = 1600`
+- **Static world size**: `WORLD_WIDTH = 1200`, `WORLD_HEIGHT = 2400` (portrait)
 - **Fence boundaries**: 50px margin, enforced via `isInBounds(x, y, margin)`
 - **Night Scene**: Dark sky (#0A0A1E), full moon with glow, dark grass (#0F2F0F), ominous dark clouds
-- **Lightning System**: Periodic lightning (5-10s intervals) forming "FRIGHTNIGHT" text in sky, with white flash effect
+- **Lightning System**: Periodic lightning (5-10s intervals) forming "FRIGHT" / "NIGHT" text in sky (2 lines), with white flash effect and sound
 - **Elements**: Dark terrain, horizontal road (150px wide), 30+ trees with glowing evil eyes, fence posts, moon, animated clouds
 - **Player boundaries**: `Player.update(landscape)` checks `landscape.isInBounds()` before moving
 - **Tree generation**: Random placement avoiding road, perimeter trees along fence
-- **Atmosphere**: Psychological horror ambiance with lightning flashes and thunder sounds
+- **Atmosphere**: Psychological horror ambiance with lightning flashes, thunder sounds, and lightning crack sounds
 
 ## State Persistence
 Uses `SharedPreferences` (not Room/SQLite). Key: `"FrightNightPrefs"`, stores: 
@@ -79,10 +79,10 @@ adb logcat -s GameView:D          # Debug game loop issues
 
 ## Project-Specific Conventions
 - **Color scheme**: Night sky (#0A0A1E), dark grass (#0F2F0F), road gray (#505050), dark trees (#0A3D0A), moon (#E0E0E0)
-- **Coordinates**: World coordinates (0-2400, 0-1600), camera translates to screen space
+- **Coordinates**: World coordinates (0-1200, 0-2400), camera translates to screen space
 - **No external dependencies**: Pure Android SDK (no game engines, no Gson/Retrofit)
-- **Landscape-only**: Set in manifest, design assumes width > height
-- **Horror effects**: Lightning strikes every 5-10s forming "FRIGHTNIGHT" text, thunder sound (res/raw/thunder.ogg)
+- **Portrait-only**: Set in manifest, design assumes height > width
+- **Horror effects**: Lightning strikes every 5-10s forming "FRIGHT" / "NIGHT" text (2 lines), thunder sound (res/raw/thunder.ogg), lightning crack (res/raw/lightning.ogg)
 - **New scare mechanics**: Implement jump scares, sound effects, visual effects based on `scaryLevel` value
 ## Common Modifications
 - **Adjust difficulty**: Change `ENEMY_SPAWN_INTERVAL`, `Enemy.speed`, or `Player.INVINCIBILITY_DURATION`

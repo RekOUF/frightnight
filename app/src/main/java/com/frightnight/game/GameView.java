@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -26,6 +27,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Random random;
     private Camera camera;
     private Landscape landscape;
+    private MediaPlayer lightningSound;
+    private boolean wasLightningActive;
     
     private int screenWidth;
     private int screenHeight;
@@ -93,6 +96,12 @@ public class GameView extends SurfaceView implements Runnable {
         
         // Update landscape
         landscape.update();
+        
+        // Play lightning sound when lightning strikes
+        if (landscape.isLightningActive() && !wasLightningActive) {
+            playLightningSound();
+        }
+        wasLightningActive = landscape.isLightningActive();
         
         // Only spawn enemies and power-ups if scary level > 0
         if (scaryLevel > 0) {
@@ -308,11 +317,33 @@ public class GameView extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        
+        // Cleanup lightning sound
+        if (lightningSound != null) {
+            lightningSound.release();
+            lightningSound = null;
+        }
     }
 
     public void resume() {
         isPlaying = true;
         gameThread = new Thread(this);
         gameThread.start();
+    }
+    
+    private void playLightningSound() {
+        try {
+            // Create new MediaPlayer for each strike
+            if (lightningSound != null) {
+                lightningSound.release();
+            }
+            lightningSound = MediaPlayer.create(getContext(), R.raw.lightning);
+            if (lightningSound != null) {
+                lightningSound.setVolume(0.8f, 0.8f); // Loud but not deafening
+                lightningSound.start();
+            }
+        } catch (Exception e) {
+            // Silently fail - don't crash game for sound issues
+        }
     }
 }

@@ -19,10 +19,9 @@ public class Landscape {
     private boolean showLightning;
     private int lightningFlashAlpha;
     
-    // 4 voetbalvelden = ongeveer 420m x 270m
-    // Schaal: 3 pixels per meter = 1260 x 810 pixels
-    public static final int WORLD_WIDTH = 2400;
-    public static final int WORLD_HEIGHT = 1600;
+    // Portrait world size: Smaller width, taller height
+    public static final int WORLD_WIDTH = 1200;
+    public static final int WORLD_HEIGHT = 2400;
     private static final int FENCE_MARGIN = 50;
     
     public Landscape() {
@@ -36,9 +35,9 @@ public class Landscape {
         roadY = worldHeight / 2 - 75;
         roadWidth = 150;
         
-        // Moon position
-        moonX = worldWidth - 300;
-        moonY = 200;
+        // Moon position (portrait: centered horizontally, higher up)
+        moonX = worldWidth / 2;
+        moonY = 300;
         
         // Lightning system
         lightningBolts = new ArrayList<>();
@@ -123,15 +122,27 @@ public class Landscape {
     
     private void generateLightning() {
         lightningBolts.clear();
-        // Create FRIGHTNIGHT text with lightning effect
-        String text = "FRIGHTNIGHT";
-        int startX = worldWidth / 2 - 400;
+        // Create FRIGHTNIGHT text with lightning effect (portrait: 2 lines)
+        String line1 = "FRIGHT";
+        String line2 = "NIGHT";
+        
+        // Center the text (smaller letters for portrait)
+        int startX1 = worldWidth / 2 - (line1.length() * 55) / 2;
+        int startX2 = worldWidth / 2 - (line2.length() * 55) / 2;
         int startY = 250;
         
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            int letterX = startX + i * 80;
+        // First line
+        for (int i = 0; i < line1.length(); i++) {
+            char c = line1.charAt(i);
+            int letterX = startX1 + i * 55;
             lightningBolts.add(new LightningBolt(letterX, startY, c));
+        }
+        
+        // Second line
+        for (int i = 0; i < line2.length(); i++) {
+            char c = line2.charAt(i);
+            int letterX = startX2 + i * 55;
+            lightningBolts.add(new LightningBolt(letterX, startY + 80, c));
         }
     }
     

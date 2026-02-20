@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_gray">
+    android:layout_height="match_parent">
+
+    <!-- Lightning background animation -->
+    <com.frightnight.game.LightningBackgroundView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Main content overlay -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/titleText"
@@ -87,4 +96,5 @@
         android:textColor="@color/ghost_white"
         android:textSize="18sp" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

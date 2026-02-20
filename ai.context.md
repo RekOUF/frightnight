@@ -3,7 +3,7 @@
 ## Project Overview
 **Project Name**: Fright Night  
 **Repository**: https://github.com/RekOUF/frightnight  
-**Current Version**: v1.0  
+**Current Version**: v1.1  
 **Last Updated**: February 20, 2026  
 
 A horror-themed survival Android game where players must survive the night by avoiding scary monsters.
@@ -11,6 +11,65 @@ A horror-themed survival Android game where players must survive the night by av
 ---
 
 ## Recent Changes
+
+### 2026-02-20: Night Scene Transformation & Version Management
+
+#### 6. Dark Horror Atmosphere with Lightning & Thunder
+- ✅ Transformed day scene to eerie night scene
+- ✅ Replaced sun with full moon (detailed with craters, glowing aura)
+- ✅ Changed sky from bright blue to dark night (#0A0A1E)
+- ✅ Dark ominous clouds replace white fluffy clouds
+- ✅ Dark grass (#0F2F0F) instead of bright green
+- ✅ **Lightning System**: Periodic lightning strikes (5-10s intervals)
+  - Lightning forms "FRIGHTNIGHT" text in the sky
+  - Electric glow effect (blue/white/yellow layered)
+  - White flash covers entire screen during strike
+  - Synchronized with thunder sound
+- ✅ **Thunder Sound Effects**: 
+  - Generated ambient thunder sound (3s duration)
+  - Low frequency rumble for atmospheric scare
+  - Plays during splash screen boot
+  - Stored as `res/raw/thunder.ogg`
+
+**Visual Details**:
+- Night sky: `#0A0A1E` (very dark blue/purple)
+- Dark grass: `#0F2F0F` (almost black green)  
+- Moon: `#E0E0E0` with `#505070` glow
+- Dark clouds: `#1A1A2E` with darker bottom edges
+- Lightning flash: Fading white overlay (alpha 80→0)
+- Lightning text: Layered glow effect (blue→white→yellow core)
+
+**Atmosphere Impact**:
+- Dramatically increases horror tension
+- Lightning illuminates world periodically
+- Thunder creates jump scare potential
+- "FRIGHTNIGHT" text reinforces theme
+- Perfect setup for future horror mechanics
+
+#### 7. Splash Screen with Version Checking
+- ✅ Version check moved from MainActivity to SplashActivity
+- ✅ Automatic GitHub API check during app boot
+- ✅ Thunder sound plays during 3-second splash
+- ✅ Update dialog shows if newer version available
+- ✅ Non-blocking: waits for both splash duration AND version check
+- ✅ Updated version system to v1.1:
+  - `build.gradle`: `versionCode 2`, `versionName "1.1"`
+  - `VersionChecker.CURRENT_VERSION`: "1.1"
+
+**Version Management Workflow**:
+1. Update `VersionChecker.CURRENT_VERSION` constant
+2. Update `build.gradle` versionCode and versionName
+3. Build and test APK
+4. Create GitHub release: `gh release create v1.1 app-debug.apk`
+5. Next app launch will detect update and prompt user
+
+**Technical Implementation**:
+- `SplashActivity` runs version check asynchronously
+- Uses boolean flags `versionChecked` and `splashComplete`
+- Only proceeds to MainActivity when both complete
+- Shows localized Dutch update dialog
+- MediaPlayer for thunder sound with low volume (0.3)
+- Proper resource cleanup in `onDestroy()`
 
 ### 2026-02-20: Scary Level System - Transform to Schrik-Spel (Scare Game)
 
@@ -68,10 +127,11 @@ A horror-themed survival Android game where players must survive the night by av
 - ✅ Created `Landscape.java` - Full environment renderer (2400x1600 world)
 - ✅ Updated all entity classes to use world coordinates
 - ✅ Implemented boundary system with fence collision detection
+- ✅ **Updated to Night Scene** (see section 6 above for details)
 
 **New Features**:
 - **Large Open World**: 2400x1600 pixels (~4 football fields)
-- **Grass Terrain**: Green grass background fills the entire world
+- **Dark Terrain**: Dark grass (#0F2F0F) creates ominous atmosphere
 - **Road System**: Horizontal road (150px wide) with yellow dashed lines
 - **Scary Trees**: 30+ trees with evil glowing eyes (yellow/red)
   - Trees along road edges
@@ -79,10 +139,11 @@ A horror-themed survival Android game where players must survive the night by av
 - **Fence Boundaries**: Brown wooden fence (50px margin from world edge)
   - Player cannot pass through - collision detection
   - Visual posts every 20 pixels
-- **Sky Elements**:
-  - Bright sun in top-right corner with glow effect
-  - 8 animated clouds that drift slowly eastward
-  - Sky blue gradient background
+- **Night Sky Elements**:
+  - Full moon in top-right with glow and crater details
+  - 12 dark ominous clouds that drift slowly
+  - Dark night sky background (#0A0A1E)
+  - Periodic lightning forming "FRIGHTNIGHT" text
 - **Camera System**: Smooth following of player, clamped to world bounds
 
 **Technical Implementation**:

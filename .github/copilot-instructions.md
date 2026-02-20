@@ -43,9 +43,12 @@ Rect getBounds()          // For collision detection
 ## Landscape System (Landscape.java)
 - **Static world size**: `WORLD_WIDTH = 2400`, `WORLD_HEIGHT = 1600`
 - **Fence boundaries**: 50px margin, enforced via `isInBounds(x, y, margin)`
-- **Elements**: Grass terrain, horizontal road (150px wide), 30+ trees with evil eyes, fence posts, sun, animated clouds
+- **Night Scene**: Dark sky (#0A0A1E), full moon with glow, dark grass (#0F2F0F), ominous dark clouds
+- **Lightning System**: Periodic lightning (5-10s intervals) forming "FRIGHTNIGHT" text in sky, with white flash effect
+- **Elements**: Dark terrain, horizontal road (150px wide), 30+ trees with glowing evil eyes, fence posts, moon, animated clouds
 - **Player boundaries**: `Player.update(landscape)` checks `landscape.isInBounds()` before moving
 - **Tree generation**: Random placement avoiding road, perimeter trees along fence
+- **Atmosphere**: Psychological horror ambiance with lightning flashes and thunder sounds
 
 ## State Persistence
 Uses `SharedPreferences` (not Room/SQLite). Key: `"FrightNightPrefs"`, stores: 
@@ -57,11 +60,14 @@ Always use `editor.apply()` not `commit()`.
 - **Current version**: Update `VersionChecker.CURRENT_VERSION` constant when releasing
 - **Gradle versions**: Sync `app/build.gradle` (`versionCode`/`versionName`) with VersionChecker
 - **GitHub workflow**: `gh release create vX.Y` triggers update notifications
-- Auto-update check runs on `MainActivity.onCreate()` via GitHub API, shows `AlertDialog` if newer version exists
+- Auto-update check runs on `SplashActivity.onCreate()` during boot screen via GitHub API
+- Shows `AlertDialog` if newer version exists, allows download or skip
+- Version check completes asynchronously, waits for both splash duration and check before proceeding
 
 ## Activity Lifecycle & Threading
+- `SplashActivity`: Boot screen with thunder sound, version checking, 3-second display before MainActivity
 - `GameActivity`: Fullscreen container, **must** call `gameView.pause()/resume()` in lifecycle methods
-- `MainActivity`: Menu + update checker, returns here on game over via `finish()`
+- `MainActivity`: Menu with scary level selector, returns here on game over via `finish()`
 - Game thread created in `resume()`, joined in `pause()` - missing this causes crashes or ANRs
 
 ## Build & Test Commands
@@ -72,13 +78,12 @@ adb logcat -s GameView:D          # Debug game loop issues
 ```
 
 ## Project-Specific Conventions
-- **Color scheme**: Sky blue (#87CEEB), grass green (#228B22), road gray (#505050), dark trees (#0A3D0A)
+- **Color scheme**: Night sky (#0A0A1E), dark grass (#0F2F0F), road gray (#505050), dark trees (#0A3D0A), moon (#E0E0E0)
 - **Coordinates**: World coordinates (0-2400, 0-1600), camera translates to screen space
 - **No external dependencies**: Pure Android SDK (no game engines, no Gson/Retrofit)
 - **Landscape-only**: Set in manifest, design assumes width > height
-Add horror effects**: Check `scaryLevel` in `GameView.update()` to trigger effects at specific levels
+- **Horror effects**: Lightning strikes every 5-10s forming "FRIGHTNIGHT" text, thunder sound (res/raw/thunder.ogg)
 - **New scare mechanics**: Implement jump scares, sound effects, visual effects based on `scaryLevel` value
-- **
 ## Common Modifications
 - **Adjust difficulty**: Change `ENEMY_SPAWN_INTERVAL`, `Enemy.speed`, or `Player.INVINCIBILITY_DURATION`
 - **New entity type**: Extend entity pattern above, add to GameView ArrayList, update in game loop, add camera param to draw()

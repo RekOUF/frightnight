@@ -1,4 +1,4 @@
-#Fri Feb 20 21:16:44 CET 2026
+#Fri Feb 20 21:20:13 CET 2026
 base.0=/root/vscode/frightnight/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/root/vscode/frightnight/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/root/vscode/frightnight/app/build/intermediates/dex/debug/mergeProjectDexDebug/6/classes.dex

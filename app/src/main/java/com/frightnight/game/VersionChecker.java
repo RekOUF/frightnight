@@ -11,7 +11,7 @@ import java.net.URL;
 public class VersionChecker {
     private static final String TAG = "VersionChecker";
     private static final String GITHUB_API_URL = "https://api.github.com/repos/RekOUF/frightnight/releases/latest";
-    private static final String CURRENT_VERSION = "2.3";
+    private static final String CURRENT_VERSION = "2.4";
     
     public interface VersionCheckListener {
         void onVersionChecked(boolean updateAvailable, String latestVersion, String downloadUrl);

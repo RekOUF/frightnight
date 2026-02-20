@@ -11,6 +11,7 @@ color purple_700
 color teal_200
 color teal_700
 color white
+drawable splash_background
 drawable splash_screen
 id gameView
 id highScoreText

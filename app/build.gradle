@@ -10,8 +10,8 @@ android {
         applicationId "com.frightnight.game"
         minSdk 24
         targetSdk 34
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "2.0"
     }
 
     buildTypes {
@@ -31,4 +31,19 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // LibGDX 3D Game Engine
+    implementation 'com.badlogicgames.gdx:gdx:1.12.1'
+    implementation 'com.badlogicgames.gdx:gdx-backend-android:1.12.1'
+    implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-armeabi-v7a'
+    implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-arm64-v8a'
+    implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86'
+    implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86_64'
+    
+    // LibGDX 3D Physics (Bullet)
+    implementation 'com.badlogicgames.gdx:gdx-bullet:1.12.1'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-armeabi-v7a'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-arm64-v8a'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86_64'
 }

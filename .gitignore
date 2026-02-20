@@ -14,3 +14,4 @@ local.properties
 bin/
 gen/
 out/
+gradle/wrapper/*.zip

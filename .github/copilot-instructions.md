@@ -1,5 +1,4 @@
 # Fright Night - Android Game Copilot Instructions
-
 ## Architecture Overview
 This is a native Android game using **SurfaceView with a custom game loop** (not a game engine). Key pattern: `GameView` implements `Runnable` with `update()→draw()→sleep()` cycle at ~60 FPS (17ms sleep). Thread management is critical - always handle `pause()`/`resume()` lifecycle properly.
 
@@ -97,3 +96,4 @@ adb logcat -s GameView:D          # Debug game loop issues
 - **Internet permissions**: Required in manifest for update checking only
 
 See `ai.context.md` for detailed release workflow and version history.
+alwais update ai.context.md with release notes and version changes after each release!

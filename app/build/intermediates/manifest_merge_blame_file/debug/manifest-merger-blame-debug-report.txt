@@ -9,181 +9,181 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:5:5-67
-11-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:5:22-64
+11-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:5:5-67
+11-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:5:22-64
 12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-12-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:6:5-79
-12-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:6:22-76
+12-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:6:5-79
+12-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:6:22-76
 13    <uses-permission
-13-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:7:5-108
+13-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:7:5-108
 14        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-14-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:7:22-78
+14-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:7:22-78
 15        android:maxSdkVersion="28" />
-15-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:7:79-105
+15-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:7:79-105
 16    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-16-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:8:5-83
-16-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:8:22-80
+16-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:8:5-83
+16-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:8:22-80
 17
 18    <!-- OpenGL ES 2.0 required for LibGDX 3D -->
 19    <uses-feature
-19-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:11:5-78
+19-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:11:5-78
 20        android:glEsVersion="0x00020000"
-20-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:11:19-51
+20-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:11:19-51
 21        android:required="true" />
-21-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:11:52-75
+21-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:11:52-75
 22
 23    <permission
-23-->[androidx.core:core:1.9.0] /root/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+23-->[androidx.core:core:1.9.0] /home/rvrhee/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
 24        android:name="com.frightnight.game.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-24-->[androidx.core:core:1.9.0] /root/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+24-->[androidx.core:core:1.9.0] /home/rvrhee/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
 25        android:protectionLevel="signature" />
-25-->[androidx.core:core:1.9.0] /root/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+25-->[androidx.core:core:1.9.0] /home/rvrhee/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
 26
 27    <uses-permission android:name="com.frightnight.game.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-27-->[androidx.core:core:1.9.0] /root/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
-27-->[androidx.core:core:1.9.0] /root/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+27-->[androidx.core:core:1.9.0] /home/rvrhee/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+27-->[androidx.core:core:1.9.0] /home/rvrhee/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
 28
 29    <application
-29-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:13:5-55:19
+29-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:13:5-55:19
 30        android:allowBackup="true"
-30-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:14:9-35
+30-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:14:9-35
 31        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-31-->[androidx.core:core:1.9.0] /root/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+31-->[androidx.core:core:1.9.0] /home/rvrhee/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
 32        android:debuggable="true"
 33        android:extractNativeLibs="true"
 34        android:hardwareAccelerated="true"
-34-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:21:9-43
+34-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:21:9-43
 35        android:icon="@mipmap/ic_launcher"
-35-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:15:9-43
+35-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:15:9-43
 36        android:label="@string/app_name"
-36-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:16:9-41
+36-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:16:9-41
 37        android:requestLegacyExternalStorage="true"
-37-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:20:9-52
+37-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:20:9-52
 38        android:roundIcon="@mipmap/ic_launcher_round"
-38-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:17:9-54
+38-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:17:9-54
 39        android:supportsRtl="true"
-39-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:18:9-35
+39-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:18:9-35
 40        android:theme="@style/Theme.FrightNight" >
-40-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:19:9-49
+40-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:19:9-49
 41        <activity
-41-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:24:9-33:20
+41-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:24:9-33:20
 42            android:name="com.frightnight.game.SplashActivity"
-42-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:25:13-43
+42-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:25:13-43
 43            android:exported="true"
-43-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:28:13-36
+43-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:28:13-36
 44            android:screenOrientation="portrait"
-44-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:26:13-49
+44-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:26:13-49
 45            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-45-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:27:13-71
+45-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:27:13-71
 46            <intent-filter>
-46-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:29:13-32:29
+46-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:29:13-32:29
 47                <action android:name="android.intent.action.MAIN" />
-47-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:30:17-69
-47-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:30:25-66
+47-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:30:17-69
+47-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:30:25-66
 48
 49                <category android:name="android.intent.category.LAUNCHER" />
-49-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:31:17-77
-49-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:31:27-74
+49-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:31:17-77
+49-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:31:27-74
 50            </intent-filter>
 51        </activity>
 52        <activity
-52-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:35:9-38:40
+52-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:35:9-38:40
 53            android:name="com.frightnight.game.MainActivity"
-53-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:36:13-41
+53-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:36:13-41
 54            android:exported="false"
-54-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:38:13-37
+54-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:38:13-37
 55            android:screenOrientation="portrait" />
-55-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:37:13-49
+55-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:37:13-49
 56        <activity
-56-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:40:9-44:74
+56-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:40:9-44:74
 57            android:name="com.frightnight.game.GameActivity"
-57-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:41:13-41
+57-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:41:13-41
 58            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
-58-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:43:13-107
+58-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:43:13-107
 59            android:screenOrientation="portrait"
-59-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:42:13-49
+59-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:42:13-49
 60            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-60-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:44:13-71
+60-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:44:13-71
 61
 62        <provider
 63            android:name="androidx.core.content.FileProvider"
-63-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:47:13-62
+63-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:47:13-62
 64            android:authorities="com.frightnight.game.provider"
-64-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:48:13-60
+64-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:48:13-60
 65            android:exported="false"
-65-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:49:13-37
+65-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:49:13-37
 66            android:grantUriPermissions="true" >
-66-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:50:13-47
+66-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:50:13-47
 67            <meta-data
-67-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:51:13-53:58
+67-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:51:13-53:58
 68                android:name="android.support.FILE_PROVIDER_PATHS"
-68-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:52:17-67
+68-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:52:17-67
 69                android:resource="@xml/provider_paths" />
-69-->/root/vscode/frightnight/app/src/main/AndroidManifest.xml:53:17-55
+69-->/home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:53:17-55
 70        </provider>
 71        <provider
-71-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+71-->[androidx.emoji2:emoji2:1.2.0] /home/rvrhee/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
 72            android:name="androidx.startup.InitializationProvider"
-72-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+72-->[androidx.emoji2:emoji2:1.2.0] /home/rvrhee/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
 73            android:authorities="com.frightnight.game.androidx-startup"
-73-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+73-->[androidx.emoji2:emoji2:1.2.0] /home/rvrhee/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
 74            android:exported="false" >
-74-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+74-->[androidx.emoji2:emoji2:1.2.0] /home/rvrhee/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
 75            <meta-data
-75-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+75-->[androidx.emoji2:emoji2:1.2.0] /home/rvrhee/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
 76                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-76-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+76-->[androidx.emoji2:emoji2:1.2.0] /home/rvrhee/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
 77                android:value="androidx.startup" />
-77-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+77-->[androidx.emoji2:emoji2:1.2.0] /home/rvrhee/.gradle/caches/transforms-3/4ef2d37eca9ad04b2c397a091ea18fe4/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
 78            <meta-data
-78-->[androidx.lifecycle:lifecycle-process:2.6.1] /root/.gradle/caches/transforms-3/f41bcf8a8e0d9819e753268d38a40d88/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+78-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/rvrhee/.gradle/caches/transforms-3/f41bcf8a8e0d9819e753268d38a40d88/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
 79                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-79-->[androidx.lifecycle:lifecycle-process:2.6.1] /root/.gradle/caches/transforms-3/f41bcf8a8e0d9819e753268d38a40d88/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+79-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/rvrhee/.gradle/caches/transforms-3/f41bcf8a8e0d9819e753268d38a40d88/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
 80                android:value="androidx.startup" />
-80-->[androidx.lifecycle:lifecycle-process:2.6.1] /root/.gradle/caches/transforms-3/f41bcf8a8e0d9819e753268d38a40d88/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+80-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/rvrhee/.gradle/caches/transforms-3/f41bcf8a8e0d9819e753268d38a40d88/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
 81            <meta-data
-81-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
 82                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-82-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
 83                android:value="androidx.startup" />
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
 84        </provider>
 85
 86        <receiver
-86-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
 87            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-87-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
 88            android:directBootAware="false"
-88-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
 89            android:enabled="true"
-89-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+89-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
 90            android:exported="true"
-90-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
 91            android:permission="android.permission.DUMP" >
-91-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
 92            <intent-filter>
-92-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+92-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
 93                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-93-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-93-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
 94            </intent-filter>
 95            <intent-filter>
-95-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+95-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
 96                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-96-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-96-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
 97            </intent-filter>
 98            <intent-filter>
-98-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+98-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
 99                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-99-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-99-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+99-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+99-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
 100            </intent-filter>
 101            <intent-filter>
-101-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+101-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
 102                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-102-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-102-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+102-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+102-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/rvrhee/.gradle/caches/transforms-3/d7e75382fd4fb70314ddb3a6f5c689ec/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
 103            </intent-filter>
 104        </receiver>
 105    </application>

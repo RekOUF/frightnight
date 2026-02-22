@@ -10,8 +10,13 @@ android {
         applicationId "com.frightnight.game"
         minSdk 21
         targetSdk 34
-        versionCode 11
-        versionName "2.4"
+        versionCode 13
+        versionName "2.8"
+        
+        // Enable native library extraction
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
     }
 
     buildTypes {
@@ -24,6 +29,84 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    packaging {
+        // Prevent duplicate files from LibGDX
+        resources {
+            pickFirsts += ['META-INF/robovm/ios/robovm.xml']
+            pickFirsts += ['META-INF/DEPENDENCIES.txt']
+            pickFirsts += ['META-INF/DEPENDENCIES']
+            pickFirsts += ['META-INF/dependencies.txt']
+            pickFirsts += ['META-INF/LICENSE.txt']
+            pickFirsts += ['META-INF/LICENSE']
+            pickFirsts += ['META-INF/license.txt']
+            pickFirsts += ['META-INF/LGPL2.1']
+            pickFirsts += ['META-INF/NOTICE.txt']
+            pickFirsts += ['META-INF/NOTICE']
+            pickFirsts += ['META-INF/notice.txt']
+        }
+        
+        // Force extraction of native libraries
+        jniLibs {
+            useLegacyPackaging = true
+            keepDebugSymbols += ['**/*.so']
+        }
+    }
+    
+    // Extract native libraries from JARs into jniLibs
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+}
+
+// Task to extract native libraries from LibGDX JARs
+afterEvaluate {
+    task copyNativeLibs(type: Copy) {
+        description = 'Copies native libs from LibGDX platform JARs'
+        
+        // Extract from debug runtime classpath (resolvable configuration)
+        from configurations.debugRuntimeClasspath.files.findAll { 
+            it.name.contains('natives') && (
+                it.name.contains('gdx-platform') || 
+                it.name.contains('gdx-bullet-platform') ||
+                it.name.contains('gdx-freetype-platform')
+            )
+        }.collect { zipTree(it) }
+        
+        into 'src/main/jniLibs'
+        include '**/*.so'
+        
+        // Handle duplicate files (keep first occurrence)
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        
+        // Organize by ABI based on source JAR name
+        eachFile { fcd ->
+            def sourcePath = fcd.file.absolutePath
+            if (sourcePath.contains('armeabi-v7a')) {
+                fcd.relativePath = new RelativePath(true, 'armeabi-v7a', fcd.name)
+            } else if (sourcePath.contains('arm64-v8a')) {
+                fcd.relativePath = new RelativePath(true, 'arm64-v8a', fcd.name)
+            } else if (sourcePath.contains('x86_64')) {
+                fcd.relativePath = new RelativePath(true, 'x86_64', fcd.name)
+            } else if (sourcePath.contains('x86')) {
+                fcd.relativePath = new RelativePath(true, 'x86', fcd.name)
+            } else {
+                // Default to arm64-v8a for unmatched files  
+                fcd.relativePath = new RelativePath(true, 'arm64-v8a', fcd.name)
+            }
+        }
+        
+        includeEmptyDirs = false
+    }
+
+    // Run before processing resources
+    tasks.whenTaskAdded { task ->
+        if (task.name == 'preBuild') {
+            task.dependsOn copyNativeLibs
+        }
     }
 }
 
@@ -40,10 +123,28 @@ dependencies {
     implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86'
     implementation 'com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86_64'
     
-    // LibGDX 3D Physics (Bullet) - DISABLED for now, not used yet
-    // implementation 'com.badlogicgames.gdx:gdx-bullet:1.12.1'
-    // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-armeabi-v7a'
-    // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-arm64-v8a'
-    // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86'
+    // LibGDX 3D Physics (Bullet) - For collision detection and ragdoll physics
+    implementation 'com.badlogicgames.gdx:gdx-bullet:1.12.1'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-armeabi-v7a'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-arm64-v8a'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86'
+    implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86_64'
+    
+    // AI & Pathfinding - For enemy behaviors and navigation
+    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
+    
+    // Post-Processing Effects - Bloom, motion blur, screen shake, vignette
+    // implementation 'com.crashinvaders.vfx:gdx-vfx-core:0.5.4'
+    // implementation 'com.crashinvaders.vfx:gdx-vfx-effects:0.5.4'
+    
+    // 2D Lighting (can be used for UI elements and overlays)
+    implementation 'com.badlogicgames.box2dlights:box2dlights:1.5'
+    
+    // Freetype for custom fonts
+    implementation 'com.badlogicgames.gdx:gdx-freetype:1.12.1'
+    implementation 'com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-armeabi-v7a'
+    implementation 'com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-arm64-v8a'
+    implementation 'com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-x86'
+    implementation 'com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-x86_64'
     // implementation 'com.badlogicgames.gdx:gdx-bullet-platform:1.12.1:natives-x86_64'
 }

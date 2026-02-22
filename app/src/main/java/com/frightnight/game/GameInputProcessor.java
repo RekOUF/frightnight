@@ -17,55 +17,56 @@ public class GameInputProcessor implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Safety checks
-        if (game == null || game.cameraController == null || game.joystick == null) {
+        if (game == null || game.fpsController == null || game.joystick == null) {
             return false;
         }
         
-        // Check if touch is on camera rotation buttons
-        if (game.cameraController.isLeftButtonPressed(screenX, screenY)) {
-            game.rotateCameraLeft(3f);
-            return true;
-        }
-        if (game.cameraController.isRightButtonPressed(screenX, screenY)) {
-            game.rotateCameraRight(3f);
-            return true;
-        }
-        if (game.cameraController.isSprintButtonPressed(screenX, screenY)) {
-            game.setRunning(true);
+        // First try FPS controller for camera look (right side of screen)
+        if (game.fpsController.touchDown(screenX, screenY, pointer)) {
             return true;
         }
         
-        // Otherwise, pass to joystick
+        // Otherwise, pass to joystick (left side)
         game.joystick.onTouchDown(screenX, screenY, pointer);
         return true;
     }
     
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (game != null && game.joystick != null) {
-            game.joystick.onTouchDragged(screenX, screenY, pointer);
+        if (game == null || game.fpsController == null || game.joystick == null) {
+            return false;
         }
+        
+        // Send to FPS controller for camera rotation
+        game.fpsController.touchDragged(screenX, screenY, pointer);
+        
+        // Also send to joystick for movement
+        game.joystick.onTouchDragged(screenX, screenY, pointer);
         return true;
     }
     
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (game == null || game.cameraController == null || game.joystick == null) {
+        if (game == null || game.fpsController == null || game.joystick == null) {
             return false;
         }
         
-        // Release sprint button
-        if (game.cameraController.isSprintButtonPressed(screenX, screenY)) {
-            game.setRunning(false);
-        }
+        // Release FPS controller
+        game.fpsController.touchUp(pointer);
         
+        // Release joystick
         game.joystick.onTouchUp(pointer);
         return true;
     }
     
     @Override
     public boolean keyDown(int keycode) {
-        // For testing on desktop (optional)
+        // Handle back button to exit game
+        if (keycode == com.badlogic.gdx.Input.Keys.BACK || keycode == com.badlogic.gdx.Input.Keys.ESCAPE) {
+            // Exit the game and return to MainActivity
+            com.badlogic.gdx.Gdx.app.exit();
+            return true;
+        }
         return false;
     }
     

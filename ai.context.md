@@ -3,14 +3,142 @@
 ## Project Overview
 **Project Name**: Fright Night  
 **Repository**: https://github.com/RekOUF/frightnight  
-**Current Version**: v1.1  
-**Last Updated**: February 20, 2026  
+**Current Version**: v2.6  
+**Last Updated**: February 22, 2026  
 
 A horror-themed survival Android game where players must survive the night by avoiding scary monsters.
 
 ---
 
 ## Recent Changes
+
+### 2026-02-22: Volumetric Clouds, Lightning/Thunder System & Flying Birds
+
+#### 9. Realistic Atmospheric Effects
+- ✅ Created `VolumetricCloud.java` - Realistic 3D clouds using multiple overlapping spheres
+- ✅ Created `LightningSystem.java` - Dramatic lightning with thunder sound effects
+- ✅ Created `FlyingBird.java` - Animated birds with wing-flapping animation
+- ✅ Integrated all systems into `FrightNightGame3D.java`
+- ✅ Moved sound files to LibGDX assets directory
+
+**Volumetric Clouds**:
+- **12 clouds** floating in the sky at varying heights (30-55m)
+- Each cloud made of **8-14 spherical puffs** with random sizes and positions
+- Semi-transparent purple-tinted dusk appearance (alpha 0.5-0.8)
+- **Drifting animation**: Clouds slowly drift across sky at random speeds/directions
+- Wrap-around: Clouds reappear on opposite side when drifting off-screen
+- Irregular puffy shapes create realistic volumetric effect
+- Total: **~100 cloud puff instances** added to scene
+
+**Lightning & Thunder System**:
+- **Random lightning strikes** every 5-15 seconds in the distance
+- Lightning appears 80-130 units away from player at random angles
+- **Screen flash effect**: White overlay fades out over 0.2 seconds
+- **Thunder rumble sound** (thunder.ogg) plays with realistic delay (0.3-0.8s) based on distance
+- **Lightning crack sound** (lightning.ogg) plays instantly at strike
+- Creates jump scare potential and enhances horror atmosphere
+- Lightning bolt rendered as jagged line from sky (40-60m) to ground
+
+**Flying Birds**:
+- **6 birds** (crows/ravens) flying through the sky at various heights (25-55m)
+- Each bird has **3 model parts**: body (ellipsoid) + left wing + right wing
+- **Wing-flapping animation**: Smooth sinusoidal wing movement at 3 flaps/second
+- **Flight patterns**:
+  - 50% circle in the air (like birds of prey)
+  - 50% fly straight toward distant targets
+  - Undulating flight paths (bob up/down)
+- 70% dark crows (almost black) for horror effect
+- Birds face direction of movement and rotate properly
+- Wrap-around: Birds reappear if they fly too far
+
+**Technical Implementation**:
+```java
+// VolumetricCloud
+- 8-14 random spheres per cloud with varying sizes (2-5 units)
+- BlendingAttribute for semi-transparency
+- Drift speed: 0.5-2.0 units/second
+- Purple-tinted material (0.7, 0.6, 0.7)
+
+// LightningSystem  
+- Screen flash using ShapeRenderer overlay
+- Asymmetric audio: crack (instant) + thunder (delayed)
+- Random strike positions around player
+- Flash intensity fades exponentially
+
+// FlyingBird
+- Wing flap: sin(time * 3 * PI * 2) * 45° angle
+- Circular flight: radius 20-50 units
+- Straight flight: picks random distant targets
+- Body: 0.4x0.8x0.3 ellipsoid, Wings: 2.5x0.1x0.8 flat boxes
+```
+
+**Performance Impact**:
+- Instance count: 98 → **234 instances** (+136)
+  - Clouds: ~100 puff instances
+  - Birds: 18 instances (6 birds × 3 parts)
+  - Rest: original trees, fence, etc.
+- Sound files: +2.5MB (thunder.ogg + lightning.ogg)
+- Rendering: Transparent objects require depth sorting (handled by LibGDX)
+
+**Gameplay Impact**:
+- **Immersive atmosphere**: Realistic sky with moving elements
+- **Jump scares**: Sudden lightning flashes startle players
+- **Environmental storytelling**: Ominous crows circling overhead
+- **Dynamic world**: Sky no longer static, feels alive
+- **Audio cues**: Thunder warns of incoming weather threats
+- **Visual variety**: Each playthrough has different cloud/bird patterns
+
+---
+
+### 2026-02-21: First-Person Camera System & LibGDX 3D Engine
+
+#### 8. First-Person Camera Implementation
+- ✅ Created `FirstPersonController.java` - Full first-person camera system
+- ✅ Touch drag camera rotation (right half of screen)
+- ✅ Pitch and yaw rotation with constraints (-89° to +89° pitch)
+- ✅ Movement via joystick (left half of screen)
+- ✅ Smooth camera look controls for mobile
+- ✅ Updated `FrightNightGame3D.java` to use FPS controller
+- ✅ Updated `GameInputProcessor.java` for FPS input handling
+- ✅ Removed old button-based camera rotation system
+
+**First-Person Features**:
+- **Camera Look**: Touch and drag on right side of screen to look around
+- **Movement**: Virtual joystick on left side for forward/backward/strafe
+- **Pitch Constraints**: Prevents camera flipping (limited to -89° to +89°)
+- **Yaw Rotation**: Full 360° horizontal rotation
+- **Configurable Sensitivity**: Adjustable look sensitivity (default 0.15 for mobile)
+
+**Technical Implementation**:
+```java
+// FirstPersonController handles:
+- touchDown() - Detects camera look area (right 60% of screen)
+- touchDragged() - Calculates delta and updates yaw/pitch
+- update() - Updates camera position and direction
+- move() - Handles player movement in 3D space
+- clampPosition() - Keeps player within world boundaries
+```
+
+**Input System**:
+- Left side: Virtual joystick for movement
+- Right side: Touch drag for camera rotation
+- Multi-touch support (simultaneous movement + look)
+- Back button: Exit to MainActivity
+
+**Game Design Impact**:
+- **Immersive Horror**: First-person view creates tension and fear
+- **Limited Visibility**: Player can only see what they're looking at
+- **Jump Scares**: Enemies can appear from any direction
+- **Exploration**: Natural way to explore the scary 3D environment
+
+**LibGDX 3D Integration**:
+- Uses LibGDX native libraries (libgdx.so, libgdx-bullet.so, libgdx-freetype.so)
+- Bullet Physics 3D ready for collision detection
+- gdx-ai ready for enemy pathfinding and behavior trees
+- Box2DLights for atmospheric lighting effects
+- FreeType for custom horror fonts
+
+---
 
 ### 2026-02-20: Night Scene Transformation & Version Management
 

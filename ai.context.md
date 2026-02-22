@@ -3,7 +3,7 @@
 ## Project Overview
 **Project Name**: Fright Night  
 **Repository**: https://github.com/RekOUF/frightnight  
-**Current Version**: v2.6  
+**Current Version**: v2.8  
 **Last Updated**: February 22, 2026  
 
 A horror-themed survival Android game where players must survive the night by avoiding scary monsters.
@@ -11,6 +11,46 @@ A horror-themed survival Android game where players must survive the night by av
 ---
 
 ## Recent Changes
+
+### 2026-02-22: Texture System Implementation
+
+#### 10. Realistic Texture System
+- ✅ Created `TextureManager.java` - Centralized texture loading and management
+- ✅ Textured ground plane using grass.png (8.6MB, realistic grass texture)
+- ✅ Textured forest path using rockandpad.png (7.8MB, stone/dirt path)
+- ✅ Proper UV coordinate mapping for 3D models
+- ✅ Texture wrapping (Repeat) for seamless tiling
+- ✅ Linear filtering for smooth texture appearance
+- ✅ Automatic texture disposal on cleanup
+
+**Texture Assets**:
+- **grass.png** (8.6MB) - Vibrant green grass used for ground plane (300x300 units)
+- **rockandpad.png** (7.8MB) - Stone and dirt path texture with realistic detail
+- **rock.png** (7.8MB) - Additional rock texture (reserved for future terrain features)
+
+**Technical Implementation**:
+- Ground plane: Large 300x300 unit flat surface with grass texture
+- Forest path: Winding path segments with proper UV coordinates for texture mapping
+- Path raised 0.15 units above terrain for visibility
+- Textures loaded from `assets/` folder via LibGDX
+- TextureWrap.Repeat for seamless tiling
+- TextureFilter.Linear for smooth appearance
+
+**Performance Impact**:
+- APK size increased to ~71MB (includes 26MB textures + LibGDX natives)
+- Textures loaded once at startup
+- No runtime performance impact
+- Proper memory cleanup via dispose()
+
+**User Experience**:
+- Realistic grass ground replaces solid green color
+- Detailed stone/dirt path clearly visible for navigation
+- Much more immersive and realistic visual appearance
+- Textures respond properly to lighting system
+
+**Version Bump**:
+- versionCode: 12 → 13
+- versionName: "2.7" → "2.8"
 
 ### 2026-02-22: Volumetric Clouds, Lightning/Thunder System & Flying Birds
 

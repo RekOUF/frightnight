@@ -10,8 +10,8 @@ android {
         applicationId "com.frightnight.game"
         minSdk 21
         targetSdk 34
-        versionCode 14
-        versionName "2.9"
+        versionCode 15
+        versionName "3.0"
         
         // Enable native library extraction
         ndk {
@@ -62,53 +62,9 @@ android {
     }
 }
 
-// Task to extract native libraries from LibGDX JARs
-afterEvaluate {
-    task copyNativeLibs(type: Copy) {
-        description = 'Copies native libs from LibGDX platform JARs'
-        
-        // Extract from debug runtime classpath (resolvable configuration)
-        from configurations.debugRuntimeClasspath.files.findAll { 
-            it.name.contains('natives') && (
-                it.name.contains('gdx-platform') || 
-                it.name.contains('gdx-bullet-platform') ||
-                it.name.contains('gdx-freetype-platform')
-            )
-        }.collect { zipTree(it) }
-        
-        into 'src/main/jniLibs'
-        include '**/*.so'
-        
-        // Handle duplicate files (keep first occurrence)
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-        
-        // Organize by ABI based on source JAR name
-        eachFile { fcd ->
-            def sourcePath = fcd.file.absolutePath
-            if (sourcePath.contains('armeabi-v7a')) {
-                fcd.relativePath = new RelativePath(true, 'armeabi-v7a', fcd.name)
-            } else if (sourcePath.contains('arm64-v8a')) {
-                fcd.relativePath = new RelativePath(true, 'arm64-v8a', fcd.name)
-            } else if (sourcePath.contains('x86_64')) {
-                fcd.relativePath = new RelativePath(true, 'x86_64', fcd.name)
-            } else if (sourcePath.contains('x86')) {
-                fcd.relativePath = new RelativePath(true, 'x86', fcd.name)
-            } else {
-                // Default to arm64-v8a for unmatched files  
-                fcd.relativePath = new RelativePath(true, 'arm64-v8a', fcd.name)
-            }
-        }
-        
-        includeEmptyDirs = false
-    }
-
-    // Run before processing resources
-    tasks.whenTaskAdded { task ->
-        if (task.name == 'preBuild') {
-            task.dependsOn copyNativeLibs
-        }
-    }
-}
+// Task to extract native libraries from LibGDX JARs - DISABLED
+// This task was extracting wrong architecture libraries.
+// Using manually extracted ARM64 libraries from jniLibs folder instead.
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'

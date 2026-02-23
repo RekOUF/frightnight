@@ -57,14 +57,19 @@ public class FrightNightGame3D implements ApplicationListener {
     private int scaryLevel = 0;
     private int score = 0;
     
+    // Demo mode (AI control)
+    private boolean isDemoMode = false;
+    private DemoAI demoAI;
+    
     // Game state
     private boolean isGameOver = false;
     
     // Virtual joystick
     public TouchJoystick joystick;
     
-    public FrightNightGame3D(int scaryLevel) {
+    public FrightNightGame3D(int scaryLevel, boolean isDemoMode) {
         this.scaryLevel = scaryLevel;
+        this.isDemoMode = isDemoMode;
     }
     
     @Override
@@ -123,6 +128,13 @@ public class FrightNightGame3D implements ApplicationListener {
             Gdx.app.log("FrightNight", "Creating controls...");
             joystick = new TouchJoystick();
             Gdx.app.log("FrightNight", "Controls created successfully");
+            
+            // Initialize demo AI if in demo mode
+            if (isDemoMode) {
+                Gdx.app.log("FrightNight", "Initializing Demo AI...");
+                demoAI = new DemoAI(terrain);
+                Gdx.app.log("FrightNight", "Demo AI initialized");
+            }
             
             // Initialize atmospheric effects
             Gdx.app.log("FrightNight", "Creating atmospheric effects...");
@@ -322,8 +334,8 @@ public class FrightNightGame3D implements ApplicationListener {
                 lightningSystem.renderFlash();
             }
             
-            // Render joystick UI
-            if (joystick != null) {
+            // Render joystick UI (hide in demo mode)
+            if (joystick != null && !isDemoMode) {
                 joystick.render();
             }
         } catch (Exception e) {
@@ -335,11 +347,29 @@ public class FrightNightGame3D implements ApplicationListener {
         if (isGameOver) return;
         if (joystick == null || fpsController == null) return;
         
-        // Get joystick movement input
-        Vector3 movement = joystick.getMovement();
+        Vector3 movement;
+        
+        // Get movement input from AI or player
+        if (isDemoMode && demoAI != null) {
+            // AI controls the player in demo mode
+            movement = demoAI.update(delta, fpsController.getPosition(), enemies);
+            
+            // AI also controls camera rotation
+            if (demoAI.shouldLookAround()) {
+                fpsController.rotateCamera(demoAI.getLookDirection());
+            }
+        } else {
+            // Player controls
+            movement = joystick.getMovement();
+        }
         
         if (movement.len() > 0.1f) {
             float speed = playerSpeed * (isRunning ? runMultiplier : 1f);
+            
+            // In demo mode, AI determines if we should run
+            if (isDemoMode && demoAI != null && demoAI.shouldRun()) {
+                speed = playerSpeed * runMultiplier;
+            }
             
             // Move using FPS controller
             fpsController.move(movement.x, movement.y, speed, delta);

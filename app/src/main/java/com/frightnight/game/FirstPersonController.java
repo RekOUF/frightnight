@@ -184,4 +184,34 @@ public class FirstPersonController {
     public void setPosition(float x, float y, float z) {
         position.set(x, y, z);
     }
+    
+    /**
+     * Programmatically rotate camera (for AI/demo mode)
+     * @param lookDir Direction vector to look towards
+     */
+    public void rotateCamera(Vector3 lookDir) {
+        if (lookDir.len() > 0.1f) {
+            // Gradually rotate towards target direction
+            float targetYaw = (float) Math.toDegrees(Math.atan2(lookDir.x, -lookDir.z));
+            float targetPitch = (float) Math.toDegrees(Math.asin(-lookDir.y));
+            
+            // Smooth rotation (don't snap instantly)
+            float yawDiff = targetYaw - yaw;
+            while (yawDiff > 180) yawDiff -= 360;
+            while (yawDiff < -180) yawDiff += 360;
+            
+            yaw += yawDiff * 0.05f; // Smooth rotation
+            pitch += (targetPitch - pitch) * 0.05f;
+            
+            // Clamp pitch
+            if (pitch > MAX_PITCH) pitch = MAX_PITCH;
+            if (pitch < MIN_PITCH) pitch = MIN_PITCH;
+            
+            // Wrap yaw
+            while (yaw < 0) yaw += 360f;
+            while (yaw >= 360) yaw -= 360f;
+            
+            updateCameraDirection();
+        }
+    }
 }

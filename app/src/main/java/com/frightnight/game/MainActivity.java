@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -25,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private int currentScaryLevel = 0;
     private MediaPlayer thunderPlayer;
+    
+    // Demo mode (attract mode)
+    private Handler demoHandler;
+    private Runnable demoRunnable;
+    private static final long DEMO_DELAY_MS = 30000; // 30 seconds
+    private boolean isDemoMode = false;
     
     private static final String[] SCARY_LEVEL_LABELS = {
         "0 - Vrij Wandelen 🌳",
@@ -84,16 +93,57 @@ public class MainActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGame();
+                cancelDemoMode();
+                startGame(false);
             }
         });
         
         // Start looping thunder sound
         playThunderLoop();
+        
+        // Setup demo mode timer
+        setupDemoMode();
+    }
+    
+    private void setupDemoMode() {
+        demoHandler = new Handler(Looper.getMainLooper());
+        demoRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "Demo mode activated - launching AI gameplay");
+                isDemoMode = true;
+                startGame(true);
+            }
+        };
+        startDemoTimer();
+    }
+    
+    private void startDemoTimer() {
+        if (demoHandler != null && demoRunnable != null) {
+            demoHandler.removeCallbacks(demoRunnable);
+            demoHandler.postDelayed(demoRunnable, DEMO_DELAY_MS);
+        }
+    }
+    
+    private void cancelDemoMode() {
+        if (demoHandler != null && demoRunnable != null) {
+            demoHandler.removeCallbacks(demoRunnable);
+        }
+    }
+    
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        // Reset demo timer on any touch
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            startDemoTimer();
+        }
+        return super.dispatchTouchEvent(event);
     }
 
-    private void startGame() {
+    private void startGame(boolean demoMode) {
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        intent.putExtra("DEMO_MODE", demoMode);
+        intent.putExtra("DEMO_SCARY_LEVEL", 5); // Demo uses scary level 5 for excitement
         startActivity(intent);
     }
 
@@ -110,12 +160,17 @@ public class MainActivity extends AppCompatActivity {
         } else if (thunderPlayer == null) {
             playThunderLoop();
         }
+        
+        // Restart demo timer when returning to menu
+        startDemoTimer();
     }
     
     @Override
     protected void onPause() {
         super.onPause();
         // Keep thunder playing in background
+        // Cancel demo timer when leaving menu
+        cancelDemoMode();
     }
     
     @Override
@@ -126,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
             thunderPlayer.release();
             thunderPlayer = null;
         }
+        // Cleanup demo handler
+        cancelDemoMode();
     }
     
     private void playThunderLoop() {

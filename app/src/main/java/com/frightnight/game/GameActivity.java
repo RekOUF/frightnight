@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
@@ -14,20 +15,29 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 public class GameActivity extends AndroidApplication {
     private static final String TAG = "GameActivity";
     private FrightNightGame3D game;
+    private boolean isDemoMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         try {
-            // Load scary level from SharedPreferences
-            SharedPreferences prefs = getSharedPreferences("FrightNightPrefs", Context.MODE_PRIVATE);
-            int scaryLevel = prefs.getInt("scaryLevel", 0);
+            // Check if demo mode
+            isDemoMode = getIntent().getBooleanExtra("DEMO_MODE", false);
             
-            Log.d(TAG, "Starting game with scary level: " + scaryLevel);
+            // Load scary level from SharedPreferences or Intent (for demo)
+            SharedPreferences prefs = getSharedPreferences("FrightNightPrefs", Context.MODE_PRIVATE);
+            int scaryLevel;
+            if (isDemoMode) {
+                scaryLevel = getIntent().getIntExtra("DEMO_SCARY_LEVEL", 5);
+                Log.d(TAG, "Starting DEMO MODE with scary level: " + scaryLevel);
+            } else {
+                scaryLevel = prefs.getInt("scaryLevel", 0);
+                Log.d(TAG, "Starting game with scary level: " + scaryLevel);
+            }
             
             // Create LibGDX game
-            game = new FrightNightGame3D(scaryLevel);
+            game = new FrightNightGame3D(scaryLevel, isDemoMode);
             
             // Configure LibGDX
             AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
@@ -44,6 +54,17 @@ public class GameActivity extends AndroidApplication {
             Log.e(TAG, "Error initializing game", e);
             finish();
         }
+    }
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // Exit demo mode on any touch
+        if (isDemoMode && event.getAction() == MotionEvent.ACTION_DOWN) {
+            Log.d(TAG, "Demo mode interrupted by user touch");
+            finish();
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
     
     @Override

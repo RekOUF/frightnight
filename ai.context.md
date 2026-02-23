@@ -3,7 +3,7 @@
 ## Project Overview
 **Project Name**: Fright Night  
 **Repository**: https://github.com/RekOUF/frightnight  
-**Current Version**: v2.9  
+**Current Version**: v3.0  
 **Last Updated**: February 23, 2026  
 
 A horror-themed survival Android game where players must survive the night by avoiding scary monsters.
@@ -11,6 +11,50 @@ A horror-themed survival Android game where players must survive the night by av
 ---
 
 ## Recent Changes
+
+### 2026-02-23: Demo Mode Implementation (v3.0)
+
+#### 12. Arcade-Style Demo Mode
+- ✅ **Added automatic demo mode** - Activates after 30 seconds of menu inactivity
+- ✅ **AI controller system** - Autonomous gameplay showcase with realistic behaviors
+- ✅ **Touch to exit** - Any screen tap during demo returns to menu
+- ✅ **Smart AI behaviors** - Explores world, flees from enemies, looks around cinematically
+- ✅ **Demo timer management** - Resets on any touch, cancels on pause
+
+**MainActivity.java Changes**:
+- New demo mode timer system with Handler and Runnable
+- 30-second inactivity detection triggers demo mode
+- Override `dispatchTouchEvent()` to reset timer on any touch
+- Added demo mode flags and controls to `startGame()` method
+- Timer cleanup in `onPause()` and `onDestroy()`
+- Demo mode passes scary level 5 for exciting showcase
+
+**GameActivity.java Changes**:
+- Added demo mode detection from Intent extras
+- Override `onTouchEvent()` to exit demo on any touch
+- Demo mode flag passed to FrightNightGame3D constructor
+- Graceful demo exit with activity finish
+
+**FrightNightGame3D.java Changes**:
+- New constructor parameter for demo mode flag
+- DemoAI controller integration for autonomous gameplay
+- AI controls movement and camera rotation in demo mode
+- Joystick UI hidden during demo mode
+- Demo AI makes decisions on running, exploring, and fleeing
+
+**New File: DemoAI.java**:
+- State machine with EXPLORING, FLEEING, and OBSERVING behaviors
+- Autonomous navigation through terrain
+- Enemy detection and flee logic (< 30 units = danger)
+- Periodic direction changes (every 3 seconds)
+- Cinematic camera look-around behavior (every 2 seconds)
+- Target selection within world boundaries
+- Smooth transitions between states
+
+**FirstPersonController.java Changes**:
+- New `rotateCamera()` method for programmatic camera control
+- Smooth rotation interpolation for AI
+- Yaw/pitch calculations from look direction vectors
 
 ### 2026-02-23: Android 14 Samsung S24 Ultra Fix
 

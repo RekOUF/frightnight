@@ -3,14 +3,67 @@
 ## Project Overview
 **Project Name**: Fright Night  
 **Repository**: https://github.com/RekOUF/frightnight  
-**Current Version**: v2.8  
-**Last Updated**: February 22, 2026  
+**Current Version**: v2.9  
+**Last Updated**: February 23, 2026  
 
 A horror-themed survival Android game where players must survive the night by avoiding scary monsters.
 
 ---
 
 ## Recent Changes
+
+### 2026-02-23: Android 14 Samsung S24 Ultra Fix
+
+#### 11. Critical Permission & Stability Fixes
+- ✅ **Fixed app crash on Samsung S24 Ultra (Android 14)** - App now properly requests runtime permissions
+- ✅ **Fixed endless update loop bug** - Version checking now compares versions correctly
+- ✅ **Added Android 13+ permission support** - POST_NOTIFICATIONS and READ_MEDIA_IMAGES
+- ✅ **Improved error handling** - All critical initialization wrapped in try-catch blocks
+- ✅ **Better permission request system** - Proper runtime permission handling for modern Android
+
+**Permission Updates (AndroidManifest.xml)**:
+- Added `POST_NOTIFICATIONS` permission (required for Android 13+)
+- Added `READ_MEDIA_IMAGES` permission (required for Android 13+)
+- Updated `WRITE_EXTERNAL_STORAGE` maxSdkVersion from 28 to 32
+- Proper permission request handling for different Android versions
+
+**SplashActivity.java Changes**:
+- New `requestRequiredPermissions()` method replacing old `requestStoragePermission()`
+- Android version-specific permission requests:
+  - Android 13+ (API 33+): POST_NOTIFICATIONS + READ_MEDIA_IMAGES
+  - Android 6-12: WRITE_EXTERNAL_STORAGE
+- Added try-catch blocks around DownloadManager initialization
+- Added try-catch blocks around BroadcastReceiver registration
+- Improved permission callback handling with better user feedback
+- Added notification permission check before downloads
+- Enhanced logging for version checking debugging
+
+**GameActivity.java Changes**:
+- Added try-catch block around game initialization
+- Game finishes gracefully if initialization fails
+- Added logging to track initialization state
+- Prevents crashes from LibGDX initialization errors
+
+**VersionChecker.java Changes**:
+- Enhanced version comparison logging
+- Strips whitespace from version strings
+- Better comparison debugging output
+- Prevents false update prompts
+
+**Bug Fixes**:
+- **Samsung S24 Ultra crash**: Fixed by proper permission handling
+- **Update loop**: Version checker now logs comparison properly
+- **BroadcastReceiver crash**: Wrapped in try-catch
+- **DownloadManager crash**: Wrapped in try-catch
+
+**Version Bump**:
+- versionCode: 13 → 14
+- versionName: "2.8" → "2.9"
+
+**Testing**:
+- Confirmed build successful on Android SDK 34
+- Release APK: 71MB (unchanged from 2.8)
+- Targets Android 14 devices (Samsung S24 Ultra, Pixel 8, etc.)
 
 ### 2026-02-22: Texture System Implementation
 

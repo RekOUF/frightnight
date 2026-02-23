@@ -1,4 +1,4 @@
-#Sun Feb 22 01:04:13 CET 2026
+#Mon Feb 23 21:39:08 CET 2026
 base.0=/home/rvrhee/vscode/projects/fri/frightnight/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
 base.1=/home/rvrhee/vscode/projects/fri/frightnight/app/build/intermediates/dex/release/mergeDexRelease/classes2.dex
 path.0=classes.dex

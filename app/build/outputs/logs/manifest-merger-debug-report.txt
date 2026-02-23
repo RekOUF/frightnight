@@ -1,20 +1,20 @@
 -- Merging decision tree log ---
 provider#androidx.core.content.FileProvider
-INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:46:9-54:20
+INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:48:9-56:20
 	android:grantUriPermissions
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:50:13-47
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:52:13-47
 	android:authorities
 		INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:48:13-60
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:50:13-60
 	android:exported
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:49:13-37
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:51:13-37
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:47:13-62
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:49:13-62
 manifest
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-57:12
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-59:12
+INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-59:12
+INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-59:12
+INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:2:1-59:12
 MERGED from [com.google.android.material:material:1.11.0] /home/rvrhee/.gradle/caches/transforms-3/74a2558674f6dcad48a387d806131537/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/rvrhee/.gradle/caches/transforms-3/4bcbdb61f70c63be020394c3ae9403e9/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /home/rvrhee/.gradle/caches/transforms-3/eb005582472c4060f015437e9d5a5229/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
@@ -81,21 +81,29 @@ ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidMani
 		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:7:79-105
 	android:name
 		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:7:22-78
-uses-permission#android.permission.REQUEST_INSTALL_PACKAGES
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:8:5-83
+uses-permission#android.permission.READ_MEDIA_IMAGES
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:8:5-76
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:8:22-80
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:8:22-73
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:9:5-77
+	android:name
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:9:22-74
+uses-permission#android.permission.REQUEST_INSTALL_PACKAGES
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:10:5-83
+	android:name
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:10:22-80
 uses-feature#0x00020000
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:11:5-78
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:13:5-78
 MERGED from [com.badlogicgames.gdx:gdx-backend-android:1.12.1] /home/rvrhee/.gradle/caches/transforms-3/a048e592cbedf5b0e485057252767a6d/transformed/jetified-gdx-backend-android-1.12.1/AndroidManifest.xml:9:5-11:35
 MERGED from [com.badlogicgames.gdx:gdx-backend-android:1.12.1] /home/rvrhee/.gradle/caches/transforms-3/a048e592cbedf5b0e485057252767a6d/transformed/jetified-gdx-backend-android-1.12.1/AndroidManifest.xml:9:5-11:35
 	android:glEsVersion
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:11:19-51
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:13:19-51
 	android:required
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:11:52-75
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:13:52-75
 application
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:13:5-55:19
-INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:13:5-55:19
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:15:5-57:19
+INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:15:5-57:19
 MERGED from [com.google.android.material:material:1.11.0] /home/rvrhee/.gradle/caches/transforms-3/74a2558674f6dcad48a387d806131537/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] /home/rvrhee/.gradle/caches/transforms-3/74a2558674f6dcad48a387d806131537/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/rvrhee/.gradle/caches/transforms-3/4bcbdb61f70c63be020394c3ae9403e9/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -115,69 +123,69 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/rvrhee/.gradle/caches
 	android:extractNativeLibs
 		INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml
 	android:requestLegacyExternalStorage
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:20:9-52
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:22:9-52
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.9.0] /home/rvrhee/.gradle/caches/transforms-3/f0f4ee7c3b88100b2d2cd4b05ab423cd/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:18:9-35
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:20:9-35
 	android:label
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:16:9-41
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:18:9-41
 	android:hardwareAccelerated
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:21:9-43
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:23:9-43
 	android:roundIcon
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:17:9-54
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:19:9-54
 	tools:targetApi
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:22:9-29
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:24:9-29
 	android:icon
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:15:9-43
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:17:9-43
 	android:allowBackup
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:14:9-35
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:16:9-35
 	android:theme
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:19:9-49
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:21:9-49
 activity#com.frightnight.game.SplashActivity
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:24:9-33:20
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:26:9-35:20
 	android:screenOrientation
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:26:13-49
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:28:13-49
 	android:exported
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:28:13-36
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:30:13-36
 	android:theme
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:27:13-71
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:29:13-71
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:25:13-43
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:27:13-43
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:29:13-32:29
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:31:13-34:29
 action#android.intent.action.MAIN
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:30:17-69
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:32:17-69
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:30:25-66
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:32:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:31:17-77
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:33:17-77
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:31:27-74
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:33:27-74
 activity#com.frightnight.game.MainActivity
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:35:9-38:40
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:37:9-40:40
 	android:screenOrientation
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:37:13-49
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:39:13-49
 	android:exported
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:38:13-37
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:40:13-37
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:36:13-41
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:38:13-41
 activity#com.frightnight.game.GameActivity
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:40:9-44:74
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:42:9-46:74
 	android:screenOrientation
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:42:13-49
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:44:13-49
 	android:configChanges
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:43:13-107
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:45:13-107
 	android:theme
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:44:13-71
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:46:13-71
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:41:13-41
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:43:13-41
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:51:13-53:58
+ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:53:13-55:58
 	android:resource
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:53:17-55
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:55:17-55
 	android:name
-		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:52:17-67
+		ADDED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml:54:17-67
 uses-sdk
 INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/rvrhee/vscode/projects/fri/frightnight/app/src/main/AndroidManifest.xml

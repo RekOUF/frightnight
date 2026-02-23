@@ -11,7 +11,7 @@ import java.net.URL;
 public class VersionChecker {
     private static final String TAG = "VersionChecker";
     private static final String GITHUB_API_URL = "https://api.github.com/repos/RekOUF/frightnight/releases/latest";
-    private static final String CURRENT_VERSION = "2.8";
+    private static final String CURRENT_VERSION = "2.9";
     
     public interface VersionCheckListener {
         void onVersionChecked(boolean updateAvailable, String latestVersion, String downloadUrl);
@@ -53,10 +53,15 @@ public class VersionChecker {
                     }
                     
                     JSONObject jsonResponse = new JSONObject(response.toString());
-                    String latestVersion = jsonResponse.getString("tag_name").replace("v", "");
+                    String latestVersion = jsonResponse.getString("tag_name").replace("v", "").trim();
                     String downloadUrl = jsonResponse.getString("html_url");
                     
-                    boolean updateAvailable = compareVersions(CURRENT_VERSION, latestVersion) < 0;
+                    Log.d(TAG, "Version comparison - Current: '" + CURRENT_VERSION + "', Latest: '" + latestVersion + "'");
+                    
+                    int comparison = compareVersions(CURRENT_VERSION, latestVersion);
+                    boolean updateAvailable = comparison < 0;
+                    
+                    Log.d(TAG, "Comparison result: " + comparison + ", Update available: " + updateAvailable);
                     
                     return new VersionResult(true, updateAvailable, latestVersion, downloadUrl, null);
                 } else {

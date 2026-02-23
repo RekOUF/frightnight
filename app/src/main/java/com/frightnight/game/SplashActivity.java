@@ -23,6 +23,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Splash screen shown on app startup
@@ -33,6 +35,7 @@ public class SplashActivity extends Activity {
     private static final String TAG = "SplashActivity";
     private static final int SPLASH_DURATION = 3000; // 3 seconds
     private static final int PERMISSION_REQUEST_CODE = 100;
+    private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 101;
     private MediaPlayer thunderPlayer;
     private boolean versionChecked = false;
     private boolean splashComplete = false;
@@ -47,13 +50,17 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         
-        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        try {
+            downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting DownloadManager", e);
+        }
         
         // Play thunder sound
         playThunderSound();
         
-        // Request permissions first
-        requestStoragePermission();
+        // Request permissions first (Android 13+ requires runtime permissions)
+        requestRequiredPermissions();
         
         // Check for updates asynchronously
         checkForUpdates();
@@ -67,28 +74,52 @@ public class SplashActivity extends Activity {
             }
         }, SPLASH_DURATION);
         
-        // Register download complete receiver
-        downloadReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                if (id == downloadId) {
-                    installApk();
+        // Register download complete receiver safely
+        try {
+            downloadReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+                    if (id == downloadId) {
+                        installApk();
+                    }
                 }
+            };
+            
+            // Register with proper flags for Android 12+
+            IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(downloadReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+            } else {
+                registerReceiver(downloadReceiver, filter);
             }
-        };
-        
-        // Register with proper flags for Android 12+
-        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(downloadReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-        } else {
-            registerReceiver(downloadReceiver, filter);
+        } catch (Exception e) {
+            Log.e(TAG, "Error registering download receiver", e);
         }
     }
     
-    private void requestStoragePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    private void requestRequiredPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ (API 33+) - Request POST_NOTIFICATIONS and READ_MEDIA_IMAGES
+            List<String> permissionsToRequest = new ArrayList<>();
+            
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.POST_NOTIFICATIONS);
+            }
+            
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                    != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.READ_MEDIA_IMAGES);
+            }
+            
+            if (!permissionsToRequest.isEmpty()) {
+                ActivityCompat.requestPermissions(this,
+                        permissionsToRequest.toArray(new String[0]),
+                        NOTIFICATION_PERMISSION_REQUEST_CODE);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android 6-12 - Request WRITE_EXTERNAL_STORAGE
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
@@ -101,11 +132,20 @@ public class SplashActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "Storage permission granted");
+        if (requestCode == PERMISSION_REQUEST_CODE || requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            boolean allGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allGranted = false;
+                    break;
+                }
+            }
+            
+            if (allGranted) {
+                Log.d(TAG, "All permissions granted");
             } else {
-                Toast.makeText(this, "Storage permission nodig voor updates", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Some permissions denied - app will work but updates may not download");
+                Toast.makeText(this, "Sommige machtigingen geweigerd - updates werken mogelijk niet", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -127,6 +167,7 @@ public class SplashActivity extends Activity {
             @Override
             public void onVersionChecked(boolean updateAvailable, String latestVersion, String downloadUrl) {
                 versionChecked = true;
+                Log.d(TAG, "Version check complete - Update available: " + updateAvailable + ", Latest: " + latestVersion);
                 if (updateAvailable) {
                     updateVersion = latestVersion;
                     updateUrl = downloadUrl;
@@ -136,7 +177,7 @@ public class SplashActivity extends Activity {
             
             @Override
             public void onError(String error) {
-                Log.d(TAG, "Version check error: " + error);
+                Log.d(TAG, "Version check error (proceeding anyway): " + error);
                 versionChecked = true;
                 proceedIfReady();
             }
@@ -184,6 +225,16 @@ public class SplashActivity extends Activity {
     
     private void downloadAndInstallApk(String url, String version) {
         try {
+            // Check notification permission for Android 13+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Notificatie machtiging nodig voor download - ga naar Instellingen", Toast.LENGTH_LONG).show();
+                    goToMainActivity();
+                    return;
+                }
+            }
+            
             // Create download request
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
             request.setTitle("Fright Night v" + version);

@@ -12,6 +12,65 @@ A horror-themed survival Android game where players must survive the night by av
 
 ## Recent Changes
 
+### 2026-02-23: Game Over UI & Production Release (v3.0)
+
+#### 14. Production APK Signing & Release
+- ✅ **Created release keystore** - Generated `frightnight-release.keystore` for production signing
+- ✅ **Signed both APK variants** - Debug (86MB) and Release (70MB) properly signed
+- ✅ **APK verification** - Both APKs verified with v1/v2 signing schemes (release also v3)
+- ✅ **Ready for distribution** - Release APK ready for Google Play or direct distribution
+
+**Release Keystore Details**:
+- File: `frightnight-release.keystore`
+- Alias: `frightnight`
+- Algorithm: RSA 2048-bit
+- Validity: 10,000 days (~27 years)
+- Signing schemes: v1 (JAR), v2 (APK Signature), v3 (APK Signature v3)
+
+**APK Sizes**:
+- Debug APK: 86MB (includes debug symbols)
+- Release APK: 70MB (optimized, ProGuard minified)
+
+**Build Process**:
+1. Generated release keystore with keytool
+2. Built both debug and release variants with Gradle
+3. Aligned release APK with zipalign
+4. Signed release APK with apksigner
+5. Verified signatures on both APKs
+
+#### 13. Game Over UI Implementation
+- ✅ **Fixed blue screen on game over** - Implemented proper game over overlay with UI elements
+- ✅ **Dark semi-transparent overlay** - 80% opacity black background for dramatic effect
+- ✅ **Game Over text rendering** - Large red "GAME OVER" text (scale 4x)
+- ✅ **Score display** - White score text showing final survival score (scale 2.5x)
+- ✅ **Exit instructions** - "Tap anywhere to exit" text (scale 1.5x)
+- ✅ **Touch to exit** - Any screen tap triggers app exit
+
+**FrightNightGame3D.java Changes**:
+- Added `SpriteBatch` for 2D UI rendering over 3D scene
+- Added `BitmapFont` for text rendering (scaled to 3x for readability)
+- Added `ShapeRenderer` for semi-transparent overlay background
+- New `renderGameOver()` method - Renders complete game over screen
+- Modified `render()` - Checks `isGameOver()` before 3D rendering, calls `renderGameOver()`
+- Modified `create()` - Initialize font with red color (1, 0, 0, 1)
+- Modified `dispose()` - Cleanup UI resources (spriteBatch, font, shapeRenderer)
+
+**GameInputProcessor.java Changes**:
+- Modified `touchDown()` - Added game over detection at start of method
+- Game over touch handler - Calls `Gdx.app.exit()` on any touch when game over
+
+**Bug Fixes**:
+- **Blue screen on game over**: Fixed by adding proper 2D UI overlay rendering
+- **FlyingBird double disposal**: Added unique Model tracking (bodyModel, wingModel fields)
+- **Enemy collision null crashes**: Added comprehensive null checks in DemoAI and Enemy updates
+
+**Visual Design**:
+- Background: Black rectangle with 80% opacity (0, 0, 0, 0.8)
+- "GAME OVER": Red text, scale 4x, centered horizontally
+- Score: White text, scale 2.5x, centered, below game over text
+- Instructions: White text, scale 1.5x, centered, bottom of screen
+- Centered layout for professional appearance
+
 ### 2026-02-23: Demo Mode Implementation (v3.0)
 
 #### 12. Arcade-Style Demo Mode

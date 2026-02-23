@@ -16,6 +16,12 @@ public class GameInputProcessor implements InputProcessor {
     
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // If game is over, exit on any touch
+        if (game != null && game.isGameOver()) {
+            com.badlogic.gdx.Gdx.app.exit();
+            return true;
+        }
+        
         // Safety checks
         if (game == null || game.fpsController == null || game.joystick == null) {
             return false;

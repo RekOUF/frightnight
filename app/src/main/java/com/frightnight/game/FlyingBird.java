@@ -18,6 +18,10 @@ public class FlyingBird {
     private ModelInstance leftWing;
     private ModelInstance rightWing;
     
+    // Track models for proper disposal
+    private Model bodyModel;
+    private Model wingModel;
+    
     private Vector3 position;
     private Vector3 velocity;
     private Vector3 targetPosition;
@@ -71,7 +75,7 @@ public class FlyingBird {
         );
         
         // Create body (small ellipsoid)
-        Model bodyModel = modelBuilder.createSphere(
+        bodyModel = modelBuilder.createSphere(
             0.4f, 0.8f, 0.3f, // Elongated body
             8, 6,
             birdMaterial,
@@ -80,7 +84,7 @@ public class FlyingBird {
         body = new ModelInstance(bodyModel);
         
         // Create wings (flat boxes)
-        Model wingModel = modelBuilder.createBox(
+        wingModel = modelBuilder.createBox(
             2.5f, 0.1f, 0.8f, // Wide, flat wings
             birdMaterial,
             VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal
@@ -204,9 +208,15 @@ public class FlyingBird {
      * Cleanup bird models
      */
     public void dispose() {
-        body.model.dispose();
-        leftWing.model.dispose();
-        rightWing.model.dispose();
+        // Only dispose each unique model once (leftWing and rightWing share the same model)
+        if (bodyModel != null) {
+            bodyModel.dispose();
+            bodyModel = null;
+        }
+        if (wingModel != null) {
+            wingModel.dispose();
+            wingModel = null;
+        }
     }
     
     public Vector3 getPosition() {

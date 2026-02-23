@@ -54,8 +54,15 @@ public class DemoAI {
         float distanceToEnemy = Float.MAX_VALUE;
         
         if (nearestEnemy != null) {
-            Vector3 enemyPos = nearestEnemy.getPosition();
-            distanceToEnemy = playerPosition.dst(enemyPos);
+            try {
+                Vector3 enemyPos = nearestEnemy.getPosition();
+                if (enemyPos != null && playerPosition != null) {
+                    distanceToEnemy = playerPosition.dst(enemyPos);
+                }
+            } catch (Exception e) {
+                // Ignore enemy position errors
+                distanceToEnemy = Float.MAX_VALUE;
+            }
         }
         
         // State machine
@@ -91,9 +98,15 @@ public class DemoAI {
                     pickNewTarget();
                 } else if (nearestEnemy != null) {
                     // Run away from enemy
-                    Vector3 enemyPos = nearestEnemy.getPosition();
-                    Vector3 fleeDirection = new Vector3(playerPosition).sub(enemyPos).nor();
-                    movementDirection.set(fleeDirection.x, 0, fleeDirection.z).nor();
+                    try {
+                        Vector3 enemyPos = nearestEnemy.getPosition();
+                        if (enemyPos != null && playerPosition != null) {
+                            Vector3 fleeDirection = new Vector3(playerPosition).sub(enemyPos).nor();
+                            movementDirection.set(fleeDirection.x, 0, fleeDirection.z).nor();
+                        }
+                    } catch (Exception e) {
+                        // Ignore flee calculation errors
+                    }
                 }
                 break;
                 
@@ -152,18 +165,27 @@ public class DemoAI {
     }
     
     private ScaryEnemy findNearestEnemy(Vector3 position, Array<ScaryEnemy> enemies) {
-        if (enemies == null || enemies.size == 0) return null;
+        if (enemies == null || enemies.size == 0 || position == null) return null;
         
         ScaryEnemy nearest = null;
         float minDistance = Float.MAX_VALUE;
         
-        for (ScaryEnemy enemy : enemies) {
-            Vector3 enemyPos = enemy.getPosition();
-            float dist = position.dst(enemyPos);
-            if (dist < minDistance) {
-                minDistance = dist;
-                nearest = enemy;
+        try {
+            for (ScaryEnemy enemy : enemies) {
+                if (enemy == null) continue;
+                
+                Vector3 enemyPos = enemy.getPosition();
+                if (enemyPos == null) continue;
+                
+                float dist = position.dst(enemyPos);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    nearest = enemy;
+                }
             }
+        } catch (Exception e) {
+            // Return null on any error
+            return null;
         }
         
         return nearest;

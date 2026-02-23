@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -66,6 +69,11 @@ public class FrightNightGame3D implements ApplicationListener {
     
     // Virtual joystick
     public TouchJoystick joystick;
+    
+    // UI rendering
+    private SpriteBatch spriteBatch;
+    private BitmapFont font;
+    private ShapeRenderer shapeRenderer;
     
     public FrightNightGame3D(int scaryLevel, boolean isDemoMode) {
         this.scaryLevel = scaryLevel;
@@ -140,6 +148,14 @@ public class FrightNightGame3D implements ApplicationListener {
             Gdx.app.log("FrightNight", "Creating atmospheric effects...");
             lightningSystem = new LightningSystem();
             Gdx.app.log("FrightNight", "Lightning system created");
+            
+            // Initialize UI components for game over screen
+            spriteBatch = new SpriteBatch();
+            font = new BitmapFont();
+            font.getData().setScale(3f); // Make text larger
+            font.setColor(Color.RED);
+            shapeRenderer = new ShapeRenderer();
+            Gdx.app.log("FrightNight", "UI components initialized");
             
             Gdx.input.setInputProcessor(new GameInputProcessor(this));
             Gdx.app.log("FrightNight", "=== Game initialization complete ===");
@@ -312,7 +328,12 @@ public class FrightNightGame3D implements ApplicationListener {
             Gdx.gl.glClearColor(0.02f, 0.05f, 0.15f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
             
-            if (isGameOver || modelBatch == null || camera == null || instances == null) {
+            if (isGameOver) {
+                renderGameOver();
+                return;
+            }
+            
+            if (modelBatch == null || camera == null || instances == null) {
                 return;
             }
             
@@ -352,11 +373,16 @@ public class FrightNightGame3D implements ApplicationListener {
         // Get movement input from AI or player
         if (isDemoMode && demoAI != null) {
             // AI controls the player in demo mode
-            movement = demoAI.update(delta, fpsController.getPosition(), enemies);
-            
-            // AI also controls camera rotation
-            if (demoAI.shouldLookAround()) {
-                fpsController.rotateCamera(demoAI.getLookDirection());
+            try {
+                movement = demoAI.update(delta, fpsController.getPosition(), enemies);
+                
+                // AI also controls camera rotation
+                if (demoAI.shouldLookAround()) {
+                    fpsController.rotateCamera(demoAI.getLookDirection());
+                }
+            } catch (Exception e) {
+                Gdx.app.error("FrightNight", "Error in demo AI: " + e.getMessage(), e);
+                movement = new Vector3(0, 0, 0);
             }
         } else {
             // Player controls
@@ -412,14 +438,23 @@ public class FrightNightGame3D implements ApplicationListener {
         
         // Update scary enemies AI
         if (enemies != null && fpsController != null) {
-            for (ScaryEnemy enemy : enemies) {
-                enemy.update(delta, fpsController.getPosition());
-                
-                // Check if enemy caught player
-                if (enemy.hasReachedPlayer(fpsController.getPosition())) {
-                    Gdx.app.log("FrightNight", "GAME OVER - Enemy caught you!");
-                    gameOver();
+            try {
+                Vector3 playerPos = fpsController.getPosition();
+                if (playerPos != null) {
+                    for (ScaryEnemy enemy : enemies) {
+                        if (enemy != null) {
+                            enemy.update(delta, playerPos);
+                            
+                            // Check if enemy caught player
+                            if (enemy.hasReachedPlayer(playerPos)) {
+                                Gdx.app.log("FrightNight", "GAME OVER - Enemy caught you!");
+                                gameOver();
+                            }
+                        }
+                    }
                 }
+            } catch (Exception e) {
+                Gdx.app.error("FrightNight", "Error updating enemies: " + e.getMessage(), e);
             }
         }
         
@@ -454,6 +489,43 @@ public class FrightNightGame3D implements ApplicationListener {
     
     public void gameOver() {
         isGameOver = true;
+    }
+    
+    private void renderGameOver() {
+        // Semi-transparent dark overlay
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(0, 0, 0, 0.8f);
+        shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        shapeRenderer.end();
+        
+        // Draw text
+        spriteBatch.begin();
+        
+        String gameOverText = "GAME OVER";
+        String scoreText = "Score: " + (int)score;
+        String tapText = "Tap anywhere to continue";
+        
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+        
+        // Center text
+        font.setColor(Color.RED);
+        font.getData().setScale(4f);
+        font.draw(spriteBatch, gameOverText, width/2 - 200, height/2 + 100);
+        
+        font.setColor(Color.WHITE);
+        font.getData().setScale(2.5f);
+        font.draw(spriteBatch, scoreText, width/2 - 100, height/2);
+        
+        font.getData().setScale(1.5f);
+        font.draw(spriteBatch, tapText, width/2 - 150, height/2 - 100);
+        
+        spriteBatch.end();
+        
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
     
     @Override
@@ -535,6 +607,17 @@ public class FrightNightGame3D implements ApplicationListener {
                 enemy.dispose();
             }
             enemies.clear();
+        }
+        
+        // Dispose UI components
+        if (spriteBatch != null) {
+            spriteBatch.dispose();
+        }
+        if (font != null) {
+            font.dispose();
+        }
+        if (shapeRenderer != null) {
+            shapeRenderer.dispose();
         }
     }
 }
